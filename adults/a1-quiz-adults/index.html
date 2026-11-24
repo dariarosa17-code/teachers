@@ -1,0 +1,555 @@
+<div id="bizarro-quiz">
+  <style>
+    #bizarro-quiz {
+      font-family: "Times New Roman", Times, serif;
+      color: #173d68;
+      background: #ffffff;
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 25px;
+      border: 1px solid #d8e5f2;
+      border-radius: 12px;
+      box-sizing: border-box;
+      line-height: 1.6;
+    }
+
+    #bizarro-quiz * {
+      box-sizing: border-box;
+      font-family: "Times New Roman", Times, serif;
+    }
+
+    #bizarro-quiz h2 {
+      color: #173d68;
+      font-size: 30px;
+      text-align: center;
+      margin: 0 0 8px;
+    }
+
+    #bizarro-quiz .bq-subtitle {
+      text-align: center;
+      color: #56718d;
+      font-size: 17px;
+      margin-bottom: 25px;
+    }
+
+    #bizarro-quiz .bq-progress-text {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 15px;
+      margin-bottom: 8px;
+      color: #56718d;
+    }
+
+    #bizarro-quiz .bq-progress-track {
+      width: 100%;
+      height: 8px;
+      background: #e8f0f8;
+      border-radius: 20px;
+      overflow: hidden;
+      margin-bottom: 25px;
+    }
+
+    #bizarro-quiz .bq-progress-fill {
+      height: 100%;
+      width: 0;
+      background: #24558a;
+      transition: width 0.3s ease;
+    }
+
+    #bizarro-quiz .bq-question-number {
+      color: #56718d;
+      font-size: 16px;
+      margin-bottom: 5px;
+    }
+
+    #bizarro-quiz .bq-question {
+      color: #173d68;
+      font-size: 23px;
+      font-weight: bold;
+      line-height: 1.4;
+      margin: 0 0 10px;
+    }
+
+    #bizarro-quiz .bq-instruction {
+      color: #56718d;
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+
+    #bizarro-quiz .bq-options {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 11px;
+    }
+
+    #bizarro-quiz .bq-option {
+      display: block;
+      width: 100%;
+      text-align: left;
+      background: #ffffff;
+      color: #173d68;
+      border: 1px solid #c9d9e9;
+      border-radius: 8px;
+      padding: 13px 16px;
+      font-size: 18px;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    #bizarro-quiz .bq-option:hover:not(:disabled) {
+      background: #f0f6fc;
+      border-color: #24558a;
+    }
+
+    #bizarro-quiz .bq-option:focus-visible,
+    #bizarro-quiz .bq-button:focus-visible {
+      outline: 3px solid #8db6df;
+      outline-offset: 2px;
+    }
+
+    #bizarro-quiz .bq-option:disabled {
+      cursor: default;
+      opacity: 1;
+    }
+
+    /* GREEN RECTANGLE: correct answer */
+    #bizarro-quiz .bq-option.bq-correct {
+      background: #e3f4e8;
+      border: 2px solid #2e8b57;
+      color: #1d6038;
+      font-weight: bold;
+    }
+
+    /* RED RECTANGLE: incorrect answer selected */
+    #bizarro-quiz .bq-option.bq-incorrect {
+      background: #fde8e7;
+      border: 2px solid #c94040;
+      color: #922b2b;
+      font-weight: bold;
+    }
+
+    #bizarro-quiz .bq-feedback {
+      display: none;
+      margin-top: 18px;
+      padding: 15px 17px;
+      border-radius: 8px;
+      background: #edf6ff;
+      border-left: 4px solid #24558a;
+      color: #173d68;
+      font-size: 17px;
+    }
+
+    #bizarro-quiz .bq-feedback.bq-show {
+      display: block;
+    }
+
+    #bizarro-quiz .bq-feedback-title {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    #bizarro-quiz .bq-explanation {
+      margin-top: 5px;
+    }
+
+    #bizarro-quiz .bq-actions {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 22px;
+    }
+
+    #bizarro-quiz .bq-button {
+      background: #24558a;
+      color: #ffffff;
+      border: 1px solid #24558a;
+      border-radius: 8px;
+      padding: 12px 25px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    #bizarro-quiz .bq-button:hover {
+      background: #173d68;
+    }
+
+    #bizarro-quiz .bq-button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    #bizarro-quiz .bq-results {
+      display: none;
+      text-align: center;
+      padding: 15px 5px;
+    }
+
+    #bizarro-quiz .bq-results h3 {
+      color: #173d68;
+      font-size: 27px;
+      margin: 0 0 12px;
+    }
+
+    #bizarro-quiz .bq-score {
+      color: #24558a;
+      font-size: 38px;
+      font-weight: bold;
+      margin: 15px 0;
+    }
+
+    #bizarro-quiz .bq-result-message {
+      color: #56718d;
+      font-size: 18px;
+      margin-bottom: 25px;
+    }
+
+    #bizarro-quiz .bq-review {
+      text-align: left;
+      margin-top: 25px;
+    }
+
+    #bizarro-quiz .bq-review-item {
+      border-top: 1px solid #d8e5f2;
+      padding: 14px 0;
+      font-size: 16px;
+    }
+
+    #bizarro-quiz .bq-review-item strong {
+      color: #173d68;
+    }
+
+    #bizarro-quiz .bq-hidden {
+      display: none !important;
+    }
+
+    @media (max-width: 520px) {
+      #bizarro-quiz {
+        padding: 18px;
+      }
+
+      #bizarro-quiz h2 {
+        font-size: 26px;
+      }
+
+      #bizarro-quiz .bq-question {
+        font-size: 21px;
+      }
+
+      #bizarro-quiz .bq-option {
+        font-size: 17px;
+      }
+    }
+  </style>
+
+  <div class="bq-header">
+    <h2>Португальский: тест A1</h2>
+    <div class="bq-subtitle">Проверьте свои знания европейского португальского языка</div>
+  </div>
+
+  <div class="bq-quiz-content">
+    <div class="bq-progress-text">
+      <span id="bq-progress-label">Вопрос 1 из 15</span>
+      <span id="bq-score-label">Баллы: 0</span>
+    </div>
+
+    <div class="bq-progress-track">
+      <div class="bq-progress-fill" id="bq-progress-fill"></div>
+    </div>
+
+    <div id="bq-question-area">
+      <div class="bq-question-number" id="bq-question-number">Вопрос 1</div>
+      <div class="bq-question" id="bq-question"></div>
+      <div class="bq-instruction" id="bq-instruction">Выберите один правильный ответ.</div>
+      <div class="bq-options" id="bq-options"></div>
+
+      <div class="bq-feedback" id="bq-feedback" aria-live="polite">
+        <div class="bq-feedback-title" id="bq-feedback-title"></div>
+        <div id="bq-feedback-text"></div>
+        <div class="bq-explanation" id="bq-explanation"></div>
+      </div>
+
+      <div class="bq-actions">
+        <button type="button" class="bq-button" id="bq-next" disabled>Следующий вопрос →</button>
+      </div>
+    </div>
+
+    <div class="bq-results" id="bq-results" aria-live="polite">
+      <h3>Тест завершён!</h3>
+      <div class="bq-score" id="bq-final-score"></div>
+      <div class="bq-result-message" id="bq-result-message"></div>
+      <button type="button" class="bq-button" id="bq-restart">Пройти тест ещё раз</button>
+      <div class="bq-review" id="bq-review"></div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const root = document.getElementById("bizarro-quiz");
+      if (!root || root.dataset.initialized === "true") return;
+      root.dataset.initialized = "true";
+
+      const questions = [
+        {
+          question: "Как правильно сказать «Я студентка» по-португальски?",
+          options: ["Eu é estudante.", "Eu sou estudante.", "Eu está estudante.", "Eu ser estudante."],
+          answer: 1,
+          explanation: "Глагол ser используется для обозначения личности, профессии и устойчивых характеристик. «Eu sou estudante» — «Я студент/студентка»."
+        },
+        {
+          question: "Выберите правильное окончание: «Bom dia! Como ___?»",
+          options: ["está", "és", "estou", "são"],
+          answer: 0,
+          explanation: "«Como está?» означает «Как Вы?» или вежливое «Как дела?». Для неформального обращения к одному человеку можно сказать «Como estás?»."
+        },
+        {
+          question: "Как будет «Мы живём в Лиссабоне»?",
+          options: ["Nós vive em Lisboa.", "Nós moram em Lisboa.", "Nós vivemos em Lisboa.", "Nós viver em Lisboa."],
+          answer: 2,
+          explanation: "С глаголом viver (жить) форма для nós (мы) — vivemos. Поэтому: «Nós vivemos em Lisboa»."
+        },
+        {
+          question: "Выберите правильный артикль: «___ casa é grande.»",
+          options: ["O", "A", "Os", "As"],
+          answer: 1,
+          explanation: "Casa — существительное женского рода в единственном числе. Поэтому используется артикль a: «A casa é grande»."
+        },
+        {
+          question: "Как правильно сказать «У меня есть брат»?",
+          options: ["Eu tenho um irmão.", "Eu sou um irmão.", "Eu está um irmão.", "Eu tem um irmão."],
+          answer: 0,
+          explanation: "Глагол ter означает «иметь». С eu используется форма tenho: «Eu tenho um irmão»."
+        },
+        {
+          question: "Выберите правильную форму: «A Maria ___ portuguesa.»",
+          options: ["são", "estou", "é", "és"],
+          answer: 2,
+          explanation: "С именем одного человека используется форма é глагола ser: «A Maria é portuguesa» — «Мария португалка»."
+        },
+        {
+          question: "Как будет «Я пью воду»?",
+          options: ["Eu bebo água.", "Eu bebe água.", "Eu beber água.", "Eu bebem água."],
+          answer: 0,
+          explanation: "В настоящем времени глагол beber с eu принимает форму bebo: «Eu bebo água»."
+        },
+        {
+          question: "Выберите правильное множественное число слова «livro» (книга).",
+          options: ["livros", "livres", "livroes", "livras"],
+          answer: 0,
+          explanation: "Большинство существительных, оканчивающихся на гласную, образуют множественное число с помощью -s: livro → livros."
+        },
+        {
+          question: "Как правильно спросить «Где находится вокзал?»",
+          options: ["Quem é a estação?", "Onde é a estação?", "Quando é a estação?", "Como é a estação?"],
+          answer: 1,
+          explanation: "Onde означает «где». Вопрос «Onde é a estação?» можно использовать, чтобы спросить, где находится вокзал."
+        },
+        {
+          question: "Выберите правильную форму: «Tu ___ português?»",
+          options: ["fala", "falo", "falas", "falam"],
+          answer: 2,
+          explanation: "С местоимением tu (ты) глагол falar (говорить) принимает форму falas: «Tu falas português?»"
+        },
+        {
+          question: "Как сказать «Сегодня холодно»?",
+          options: ["Hoje é frio.", "Hoje está frio.", "Hoje são frio.", "Hoje tenho frio tempo."],
+          answer: 1,
+          explanation: "Для описания текущей погоды используется estar: «Hoje está frio» — «Сегодня холодно»."
+        },
+        {
+          question: "Выберите правильный вариант: «Quero ___ café, por favor.»",
+          options: ["uma", "um", "uns", "umas"],
+          answer: 1,
+          explanation: "Café — существительное мужского рода в единственном числе. Поэтому: «um café» — «один кофе»."
+        },
+        {
+          question: "Как правильно сказать «Я не понимаю»?",
+          options: ["Eu não compreendo.", "Eu compreendo não.", "Eu não compreendes.", "Eu não compreender."],
+          answer: 0,
+          explanation: "В португальском языке отрицание não обычно ставится перед глаголом: «Eu não compreendo» — «Я не понимаю»."
+        },
+        {
+          question: "Выберите правильный вариант: «Ontem, eu ___ ao cinema.»",
+          options: ["vou", "ir", "fui", "vai"],
+          answer: 2,
+          explanation: "Ontem означает «вчера». Для рассказа о завершённом действии используется прошедшая форма fui: «Ontem, eu fui ao cinema» — «Вчера я ходил/ходила в кино»."
+        },
+        {
+          question: "Как вежливо попросить счёт в кафе в Португалии?",
+          options: ["A conta, se faz favor.", "A conta, tu és.", "A conta, bom dia.", "A conta, obrigado por ser."],
+          answer: 0,
+          explanation: "«A conta, se faz favor» — вежливый способ попросить счёт: «Счёт, пожалуйста». В европейском португальском также часто говорят «A conta, por favor»."
+        }
+      ];
+
+      let current = 0;
+      let score = 0;
+      let answered = false;
+      const userAnswers = [];
+
+      const questionNumber = root.querySelector("#bq-question-number");
+      const questionText = root.querySelector("#bq-question");
+      const optionsArea = root.querySelector("#bq-options");
+      const feedback = root.querySelector("#bq-feedback");
+      const feedbackTitle = root.querySelector("#bq-feedback-title");
+      const feedbackText = root.querySelector("#bq-feedback-text");
+      const explanation = root.querySelector("#bq-explanation");
+      const nextButton = root.querySelector("#bq-next");
+      const progressLabel = root.querySelector("#bq-progress-label");
+      const scoreLabel = root.querySelector("#bq-score-label");
+      const progressFill = root.querySelector("#bq-progress-fill");
+      const questionArea = root.querySelector("#bq-question-area");
+      const results = root.querySelector("#bq-results");
+
+      function renderQuestion() {
+        answered = false;
+        const q = questions[current];
+
+        questionNumber.textContent = "Вопрос " + (current + 1);
+        questionText.textContent = q.question;
+        progressLabel.textContent = "Вопрос " + (current + 1) + " из " + questions.length;
+        scoreLabel.textContent = "Баллы: " + score;
+        progressFill.style.width = (current / questions.length * 100) + "%";
+
+        optionsArea.innerHTML = "";
+        feedback.classList.remove("bq-show");
+        feedbackTitle.textContent = "";
+        feedbackText.textContent = "";
+        explanation.textContent = "";
+        nextButton.disabled = true;
+        nextButton.textContent = current === questions.length - 1
+          ? "Посмотреть результат →"
+          : "Следующий вопрос →";
+
+        q.options.forEach(function (option, index) {
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = "bq-option";
+          button.textContent = String.fromCharCode(65 + index) + ". " + option;
+          button.addEventListener("click", function () {
+            chooseAnswer(index);
+          });
+          optionsArea.appendChild(button);
+        });
+      }
+
+      function chooseAnswer(index) {
+        if (answered) return;
+        answered = true;
+
+        const q = questions[current];
+        const buttons = optionsArea.querySelectorAll(".bq-option");
+        const isCorrect = index === q.answer;
+        userAnswers[current] = index;
+
+        buttons.forEach(function (button, i) {
+          button.disabled = true;
+
+          if (i === q.answer) {
+            button.classList.add("bq-correct");
+          }
+
+          if (i === index && !isCorrect) {
+            button.classList.add("bq-incorrect");
+          }
+        });
+
+        if (isCorrect) {
+          feedbackTitle.textContent = "Правильно! Отличная работа!";
+          feedbackText.textContent = "Ваш ответ верный.";
+        } else {
+          feedbackTitle.textContent = "Не совсем! Попробуйте запомнить.";
+          feedbackText.textContent = "Правильный ответ: " + q.options[q.answer] + ".";
+        }
+
+        explanation.textContent = q.explanation;
+        feedback.classList.add("bq-show");
+
+        if (isCorrect) score++;
+
+        scoreLabel.textContent = "Баллы: " + score;
+        nextButton.disabled = false;
+      }
+
+      function showResults() {
+        questionArea.classList.add("bq-hidden");
+        root.querySelector(".bq-header").classList.add("bq-hidden");
+        progressLabel.textContent = "Тест завершён";
+        scoreLabel.textContent = "Баллы: " + score;
+        progressFill.style.width = "100%";
+        results.style.display = "block";
+
+        root.querySelector("#bq-final-score").textContent = score + " / " + questions.length;
+
+        const percentage = score / questions.length;
+        let message = "";
+
+        if (percentage === 1) {
+          message = "Превосходно! Вы правильно ответили на все вопросы. Ваш уровень A1 очень уверенный!";
+        } else if (percentage >= 0.8) {
+          message = "Отличный результат! Вы хорошо знаете основы европейского португальского.";
+        } else if (percentage >= 0.6) {
+          message = "Хорошая работа! Вы уже знаете многое, но некоторые темы стоит повторить.";
+        } else if (percentage >= 0.4) {
+          message = "Неплохо для начала! Повторите объяснения и попробуйте пройти тест ещё раз.";
+        } else {
+          message = "Это только начало! Повторите основы A1 и возвращайтесь к тесту. Практика поможет!";
+        }
+
+        root.querySelector("#bq-result-message").textContent = message;
+
+        const review = root.querySelector("#bq-review");
+        review.innerHTML = "<h3 style='font-size:22px;text-align:left;margin-top:25px;'>Разбор ответов</h3>";
+
+        questions.forEach(function (q, i) {
+          const item = document.createElement("div");
+          item.className = "bq-review-item";
+
+          const title = document.createElement("strong");
+          title.textContent = (i + 1) + ". " + q.question;
+
+          const yourAnswer = document.createElement("div");
+          const chosen = userAnswers[i] !== undefined ? q.options[userAnswers[i]] : "Нет ответа";
+          yourAnswer.textContent = "Ваш ответ: " + chosen;
+
+          const correctAnswer = document.createElement("div");
+          correctAnswer.textContent = "Правильный ответ: " + q.options[q.answer];
+
+          const detail = document.createElement("div");
+          detail.style.color = "#56718d";
+          detail.style.marginTop = "5px";
+          detail.textContent = q.explanation;
+
+          item.appendChild(title);
+          item.appendChild(yourAnswer);
+          item.appendChild(correctAnswer);
+          item.appendChild(detail);
+          review.appendChild(item);
+        });
+      }
+
+      nextButton.addEventListener("click", function () {
+        if (!answered) return;
+
+        if (current < questions.length - 1) {
+          current++;
+          renderQuestion();
+        } else {
+          showResults();
+        }
+      });
+
+      root.querySelector("#bq-restart").addEventListener("click", function () {
+        current = 0;
+        score = 0;
+        answered = false;
+        userAnswers.length = 0;
+        results.style.display = "none";
+        questionArea.classList.remove("bq-hidden");
+        root.querySelector(".bq-header").classList.remove("bq-hidden");
+        renderQuestion();
+      });
+
+      renderQuestion();
+    })();
+  </script>
+</div>
