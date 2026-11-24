@@ -1,0 +1,635 @@
+<div id="bizarro-b1-quiz">
+  <style>
+    #bizarro-b1-quiz {
+      font-family: "Times New Roman", Times, serif;
+      color: #173d68;
+      background: #ffffff;
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 25px;
+      border: 1px solid #d8e5f2;
+      border-radius: 12px;
+      box-sizing: border-box;
+      line-height: 1.6;
+    }
+
+    #bizarro-b1-quiz * {
+      box-sizing: border-box;
+      font-family: "Times New Roman", Times, serif;
+    }
+
+    #bizarro-b1-quiz h2 {
+      color: #173d68;
+      font-size: 29px;
+      text-align: center;
+      margin: 0 0 8px;
+      font-weight: normal;
+    }
+
+    #bizarro-b1-quiz .bq-subtitle {
+      text-align: center;
+      color: #56718d;
+      font-size: 16px;
+      margin-bottom: 25px;
+    }
+
+    #bizarro-b1-quiz .bq-progress-text {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 15px;
+      margin-bottom: 8px;
+      color: #56718d;
+    }
+
+    #bizarro-b1-quiz .bq-progress-track {
+      width: 100%;
+      height: 8px;
+      background: #e8f0f8;
+      border-radius: 20px;
+      overflow: hidden;
+      margin-bottom: 25px;
+    }
+
+    #bizarro-b1-quiz .bq-progress-fill {
+      height: 100%;
+      width: 0;
+      background: #24558a;
+      transition: width 0.3s ease;
+    }
+
+    #bizarro-b1-quiz .bq-question-number {
+      color: #56718d;
+      font-size: 15px;
+      margin-bottom: 5px;
+    }
+
+    #bizarro-b1-quiz .bq-question {
+      color: #173d68;
+      font-size: 22px;
+      font-weight: bold;
+      line-height: 1.4;
+      margin: 0 0 10px;
+    }
+
+    #bizarro-b1-quiz .bq-instruction {
+      color: #56718d;
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+
+    #bizarro-b1-quiz .bq-options {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    #bizarro-b1-quiz .bq-option {
+      display: block;
+      width: 100%;
+      text-align: left;
+      background: #ffffff;
+      color: #173d68;
+      border: 1px solid #c9d9e9;
+      border-radius: 8px;
+      padding: 12px 15px;
+      font-size: 17px;
+      line-height: 1.5;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    #bizarro-b1-quiz .bq-option:hover:not(:disabled) {
+      background: #f0f6fc;
+      border-color: #24558a;
+    }
+
+    #bizarro-b1-quiz .bq-option:focus-visible,
+    #bizarro-b1-quiz .bq-button:focus-visible {
+      outline: 3px solid #8db6df;
+      outline-offset: 2px;
+    }
+
+    #bizarro-b1-quiz .bq-option:disabled {
+      cursor: default;
+      opacity: 1;
+    }
+
+    #bizarro-b1-quiz .bq-option.bq-correct {
+      background: #e3f4e8;
+      border: 2px solid #2e8b57;
+      color: #1d6038;
+      font-weight: bold;
+    }
+
+    #bizarro-b1-quiz .bq-option.bq-incorrect {
+      background: #fde8e7;
+      border: 2px solid #c94040;
+      color: #922b2b;
+      font-weight: bold;
+    }
+
+    #bizarro-b1-quiz .bq-feedback {
+      display: none;
+      margin-top: 18px;
+      padding: 14px 16px;
+      border-radius: 8px;
+      background: #edf6ff;
+      border-left: 4px solid #24558a;
+      color: #173d68;
+      font-size: 16px;
+    }
+
+    #bizarro-b1-quiz .bq-feedback.bq-show {
+      display: block;
+    }
+
+    #bizarro-b1-quiz .bq-feedback-title {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    #bizarro-b1-quiz .bq-explanation {
+      margin-top: 5px;
+    }
+
+    #bizarro-b1-quiz .bq-actions {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 22px;
+    }
+
+    #bizarro-b1-quiz .bq-button {
+      background: #24558a;
+      color: #ffffff;
+      border: 1px solid #24558a;
+      border-radius: 8px;
+      padding: 11px 22px;
+      font-size: 17px;
+      cursor: pointer;
+    }
+
+    #bizarro-b1-quiz .bq-button:hover:not(:disabled) {
+      background: #173d68;
+    }
+
+    #bizarro-b1-quiz .bq-button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    #bizarro-b1-quiz .bq-results {
+      display: none;
+      text-align: center;
+      padding: 15px 5px;
+    }
+
+    #bizarro-b1-quiz .bq-results h3 {
+      color: #173d68;
+      font-size: 26px;
+      margin: 0 0 12px;
+    }
+
+    #bizarro-b1-quiz .bq-score {
+      color: #24558a;
+      font-size: 36px;
+      font-weight: bold;
+      margin: 15px 0;
+    }
+
+    #bizarro-b1-quiz .bq-result-message {
+      color: #56718d;
+      font-size: 17px;
+      margin-bottom: 25px;
+    }
+
+    #bizarro-b1-quiz .bq-review {
+      text-align: left;
+      margin-top: 25px;
+    }
+
+    #bizarro-b1-quiz .bq-review-item {
+      border-top: 1px solid #d8e5f2;
+      padding: 13px 0;
+      font-size: 15px;
+      overflow-wrap: anywhere;
+    }
+
+    #bizarro-b1-quiz .bq-review-item strong {
+      color: #173d68;
+    }
+
+    #bizarro-b1-quiz .bq-hidden {
+      display: none !important;
+    }
+
+    @media (max-width: 520px) {
+      #bizarro-b1-quiz {
+        padding: 18px;
+      }
+
+      #bizarro-b1-quiz h2 {
+        font-size: 25px;
+      }
+
+      #bizarro-b1-quiz .bq-question {
+        font-size: 20px;
+      }
+
+      #bizarro-b1-quiz .bq-option {
+        font-size: 16px;
+        padding: 11px 12px;
+      }
+    }
+  </style>
+
+  <div class="bq-header">
+    <h2>Португальский: тест B1</h2>
+    <div class="bq-subtitle">
+      Проверьте свои знания европейского португальского языка
+    </div>
+  </div>
+
+  <div class="bq-quiz-content">
+    <div class="bq-progress-text">
+      <span id="bqb1-progress-label">Вопрос 1 из 15</span>
+      <span id="bqb1-score-label">Баллы: 0</span>
+    </div>
+
+    <div class="bq-progress-track">
+      <div class="bq-progress-fill" id="bqb1-progress-fill"></div>
+    </div>
+
+    <div id="bqb1-question-area">
+      <div class="bq-question-number" id="bqb1-question-number">Вопрос 1</div>
+      <div class="bq-question" id="bqb1-question"></div>
+      <div class="bq-instruction">Выберите один правильный ответ.</div>
+      <div class="bq-options" id="bqb1-options"></div>
+
+      <div class="bq-feedback" id="bqb1-feedback" aria-live="polite">
+        <div class="bq-feedback-title" id="bqb1-feedback-title"></div>
+        <div id="bqb1-feedback-text"></div>
+        <div class="bq-explanation" id="bqb1-explanation"></div>
+      </div>
+
+      <div class="bq-actions">
+        <button type="button" class="bq-button" id="bqb1-next" disabled>
+          Следующий вопрос →
+        </button>
+      </div>
+    </div>
+
+    <div class="bq-results" id="bqb1-results" aria-live="polite">
+      <h3>Тест завершён!</h3>
+      <div class="bq-score" id="bqb1-final-score"></div>
+      <div class="bq-result-message" id="bqb1-result-message"></div>
+      <button type="button" class="bq-button" id="bqb1-restart">
+        Пройти тест ещё раз
+      </button>
+      <div class="bq-review" id="bqb1-review"></div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const root = document.getElementById("bizarro-b1-quiz");
+      if (!root || root.dataset.initialized === "true") return;
+      root.dataset.initialized = "true";
+
+      const questions = [
+        {
+          question: "1. «Quando era criança, Mary Katherine ___ que podia ter nascido lobisomem.» Escolha a forma verbal adequada.",
+          options: [
+            "pensou sempre",
+            "pensava",
+            "pensará",
+            "tenha pensado"
+          ],
+          answer: 1,
+          explanation: "O pretérito imperfeito («pensava») é usado para descrever pensamentos, hábitos ou situações habituais no passado."
+        },
+        {
+          question: "2. «Se Mary Katherine pudesse escolher, ___ de atravessar a aldeia todas as semanas.»",
+          options: [
+            "não teria",
+            "não teve",
+            "não tem",
+            "não terá"
+          ],
+          answer: 0,
+          explanation: "Nesta frase hipotética, usamos o imperfeito do conjuntivo («pudesse») e o condicional («não teria»). É uma estrutura importante do nível B1."
+        },
+        {
+          question: "3. Qual destas frases transmite corretamente a ideia de que Mary Katherine levou os livros à irmã?",
+          options: [
+            "Mary Katherine levou-lhe os livros.",
+            "Mary Katherine levou-os-lhe os livros.",
+            "Mary Katherine lhe levou-os.",
+            "Mary Katherine levou ela os livros."
+          ],
+          answer: 0,
+          explanation: "«Lhe» substitui «à irmã», isto é, indica a pessoa que recebe os livros. «Os livros» continua expresso na frase."
+        },
+        {
+          question: "4. «A casa dos Blackwood estava cheia de objetos antigos, ___ eram cuidadosamente mantidos nos seus lugares.»",
+          options: [
+            "que",
+            "quem",
+            "onde",
+            "cujo"
+          ],
+          answer: 0,
+          explanation: "O pronome relativo «que» retoma «objetos» e funciona como sujeito da oração relativa: os objetos eram mantidos nos seus lugares."
+        },
+        {
+          question: "5. Qual é a melhor interpretação da expressão «poder voltar a casa pelo céu»?",
+          options: [
+            "Mary Katherine quer aprender a voar por diversão.",
+            "Mary Katherine deseja evitar o contacto com os habitantes da aldeia.",
+            "Mary Katherine acredita que a aldeia está literalmente no céu.",
+            "Mary Katherine não sabe o caminho para casa."
+          ],
+          answer: 1,
+          explanation: "A expressão revela o desejo de evitar o percurso pela aldeia e o desconforto provocado pela presença dos seus habitantes."
+        },
+        {
+          question: "6. «Stella perguntou a Mary Katherine: “Como estás hoje?”» Qual é a transformação correta para o discurso indireto?",
+          options: [
+            "Stella perguntou a Mary Katherine como estava naquele dia.",
+            "Stella perguntou a Mary Katherine como estás hoje.",
+            "Stella perguntou a Mary Katherine como tinha estado amanhã.",
+            "Stella perguntou a Mary Katherine que como estava naquele dia."
+          ],
+          answer: 0,
+          explanation: "No discurso indireto, o presente («estás») passa normalmente para o imperfeito («estava») e «hoje» transforma-se em «naquele dia»."
+        },
+        {
+          question: "7. «A casa foi construída ao longo de gerações e guardava os bens de toda a família.» Qual destas opções melhor interpreta a organização dos objetos?",
+          options: [
+            "Simboliza a instabilidade e o desejo de mudança dos Blackwood.",
+            "Representa a ligação à tradição, à permanência e à identidade familiar.",
+            "Mostra que a família não tinha objetos suficientes.",
+            "Demonstra que os Blackwood pretendiam abandonar a casa."
+          ],
+          answer: 1,
+          explanation: "A narradora descreve os bens acumulados ao longo das gerações como uma fundação que mantém a casa firme. Os objetos simbolizam continuidade, tradição e pertença."
+        },
+        {
+          question: "8. Escolha a opção que completa corretamente a frase: «A aldeia ___ Mary Katherine passava era um lugar que lhe causava desconforto.»",
+          options: [
+            "que",
+            "onde",
+            "cuja",
+            "quem"
+          ],
+          answer: 1,
+          explanation: "«Onde» retoma um lugar e significa «em que». A frase equivale a «A aldeia em que Mary Katherine passava...»; numa formulação mais natural, também poderíamos dizer «A aldeia por onde Mary Katherine passava»."
+        },
+        {
+          question: "9. No contexto do texto, o que significa «bisbilhotavam»?",
+          options: [
+            "Trabalhavam em silêncio.",
+            "Observavam as estrelas.",
+            "Falavam da vida alheia.",
+            "Organizavam os objetos da casa."
+          ],
+          answer: 2,
+          explanation: "«Bisbilhotar» significa falar sobre assuntos privados de outras pessoas ou procurar saber da vida alheia."
+        },
+        {
+          question: "10. «Embora Constance ___ raramente de casa, Mary Katherine ___ de fazer as compras.» Escolha a combinação correta.",
+          options: [
+            "saía / tinha",
+            "saísse / tinha",
+            "saiu / tivesse",
+            "sair / tem"
+          ],
+          answer: 1,
+          explanation: "«Embora» introduz aqui uma ideia de concessão e pede o conjuntivo. Como a situação é habitual no passado, usamos «saísse»; «tinha» descreve a obrigação de Mary Katherine."
+        },
+        {
+          question: "11. Qual é a principal razão pela qual Mary Katherine entra no café Stella's, apesar de preferir estar em casa?",
+          options: [
+            "Quer conversar longamente com todos os clientes.",
+            "Precisa de trabalhar no café antes de ir para casa.",
+            "Tem receio de que Stella interprete a sua ausência como sinal de medo.",
+            "Constance pediu-lhe que comprasse comida para Stella."
+          ],
+          answer: 2,
+          explanation: "Mary Katherine admite que Stella a veria passar caso não entrasse e poderia pensar que estava com medo. O orgulho e a preocupação com a forma como é vista influenciam a sua decisão."
+        },
+        {
+          question: "12. Complete a frase com o pronome relativo adequado: «O tio Julian, ___ papéis ocupavam parte do seu tempo, gostava de ouvir Constance ler.»",
+          options: [
+            "que",
+            "onde",
+            "cujos",
+            "quem"
+          ],
+          answer: 2,
+          explanation: "«Cujos» exprime posse e concorda com o nome seguinte, «papéis», que está no masculino plural: os papéis do tio Julian."
+        },
+        {
+          question: "13. Qual destas frases apresenta corretamente uma relação temporal entre duas ações passadas?",
+          options: [
+            "Quando Mary Katherine chegou à biblioteca, o sol ainda brilhava.",
+            "Quando Mary Katherine chegava à biblioteca, o sol brilhou amanhã.",
+            "Quando Mary Katherine chegar à biblioteca, o sol ainda brilhava ontem.",
+            "Quando Mary Katherine chega à biblioteca, o sol tinha brilhar."
+          ],
+          answer: 0,
+          explanation: "O pretérito perfeito («chegou») indica um acontecimento pontual; o imperfeito («brilhava») descreve uma situação que estava em curso nesse momento."
+        },
+        {
+          question: "14. A narradora descreve as promessas da Primavera como «falsas e gloriosas». O que sugere esta combinação de palavras?",
+          options: [
+            "A narradora está completamente feliz e confiante em relação ao futuro.",
+            "A beleza da Primavera contrasta com uma visão desconfiada ou negativa do mundo.",
+            "A narradora acredita que a Primavera nunca chega à aldeia.",
+            "A narradora não consegue observar a natureza."
+          ],
+          answer: 1,
+          explanation: "«Gloriosas» evoca beleza e esperança, enquanto «falsas» põe essa promessa em causa. O contraste sugere uma perspetiva ambivalente e desconfiada da narradora."
+        },
+        {
+          question: "15. Qual destas afirmações descreve melhor a relação entre Mary Katherine e o mundo exterior?",
+          options: [
+            "Sente-se perfeitamente integrada na comunidade e procura constantemente a companhia dos habitantes.",
+            "Evita qualquer responsabilidade e nunca sai de casa.",
+            "Mantém uma ligação forte à casa e à irmã, mas encara as deslocações à aldeia com receio e desconfiança.",
+            "Deseja abandonar Constance e viver na cidade."
+          ],
+          answer: 2,
+          explanation: "A casa e Constance representam o espaço familiar e seguro de Mary Katherine. As saídas são necessárias, mas o texto mostra desconforto, desconfiança e vontade de evitar o contacto com a aldeia."
+        }
+      ];
+
+      let current = 0;
+      let score = 0;
+      let answered = false;
+      const userAnswers = [];
+
+      const $ = function (id) {
+        return root.querySelector("#bqb1-" + id);
+      };
+
+      function renderQuestion() {
+        answered = false;
+        const q = questions[current];
+
+        $("question-number").textContent = "Вопрос " + (current + 1);
+        $("question").textContent = q.question;
+        $("progress-label").textContent =
+          "Вопрос " + (current + 1) + " из " + questions.length;
+        $("score-label").textContent = "Баллы: " + score;
+        $("progress-fill").style.width =
+          (current / questions.length * 100) + "%";
+
+        $("options").replaceChildren();
+        $("feedback").classList.remove("bq-show");
+        $("feedback-title").textContent = "";
+        $("feedback-text").textContent = "";
+        $("explanation").textContent = "";
+        $("next").disabled = true;
+        $("next").textContent = current === questions.length - 1
+          ? "Посмотреть результат →"
+          : "Следующий вопрос →";
+
+        q.options.forEach(function (option, index) {
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = "bq-option";
+          button.textContent =
+            String.fromCharCode(65 + index) + ". " + option;
+          button.addEventListener("click", function () {
+            chooseAnswer(index);
+          });
+          $("options").appendChild(button);
+        });
+      }
+
+      function chooseAnswer(index) {
+        if (answered) return;
+        answered = true;
+
+        const q = questions[current];
+        const buttons = $("options").querySelectorAll(".bq-option");
+        const isCorrect = index === q.answer;
+        userAnswers[current] = index;
+
+        buttons.forEach(function (button, i) {
+          button.disabled = true;
+
+          if (i === q.answer) {
+            button.classList.add("bq-correct");
+          }
+
+          if (i === index && !isCorrect) {
+            button.classList.add("bq-incorrect");
+          }
+        });
+
+        if (isCorrect) {
+          score++;
+          $("feedback-title").textContent = "Правильно! Отличная работа!";
+          $("feedback-text").textContent = "Ваш ответ верный.";
+        } else {
+          $("feedback-title").textContent = "Не совсем!";
+          $("feedback-text").textContent =
+            "Правильный ответ: " + q.options[q.answer] + ".";
+        }
+
+        $("explanation").textContent = q.explanation;
+        $("feedback").classList.add("bq-show");
+        $("score-label").textContent = "Баллы: " + score;
+        $("next").disabled = false;
+      }
+
+      function showResults() {
+        $("question-area").classList.add("bq-hidden");
+        root.querySelector(".bq-header").classList.add("bq-hidden");
+        $("progress-label").textContent = "Тест завершён";
+        $("score-label").textContent = "Баллы: " + score;
+        $("progress-fill").style.width = "100%";
+        $("results").style.display = "block";
+
+        $("final-score").textContent = score + " / " + questions.length;
+
+        const percentage = score / questions.length;
+        let message;
+
+        if (percentage === 1) {
+          message = "Превосходно! Вы правильно ответили на все вопросы. Вы отлично справляетесь с грамматикой и анализом текста уровня B1!";
+        } else if (percentage >= 0.8) {
+          message = "Отличный результат! Вы хорошо понимаете основные грамматические структуры и смысловые нюансы текста.";
+        } else if (percentage >= 0.6) {
+          message = "Хорошая работа! Вы демонстрируете уверенные знания, но некоторые грамматические темы и детали текста стоит повторить.";
+        } else if (percentage >= 0.4) {
+          message = "Неплохо! Разберите объяснения к ошибкам и попробуйте пройти тест ещё раз.";
+        } else {
+          message = "Этот тест сложнее базовых упражнений. Изучите объяснения, повторите грамматику и попробуйте снова.";
+        }
+
+        $("result-message").textContent = message;
+        $("review").replaceChildren();
+
+        const heading = document.createElement("h3");
+        heading.style.cssText =
+          "font-size:22px;text-align:left;margin-top:25px;";
+        heading.textContent = "Разбор ответов";
+        $("review").appendChild(heading);
+
+        questions.forEach(function (q, i) {
+          const item = document.createElement("div");
+          item.className = "bq-review-item";
+
+          const title = document.createElement("strong");
+          title.textContent = (i + 1) + ". " + q.question;
+
+          const yourAnswer = document.createElement("div");
+          yourAnswer.textContent = "Ваш ответ: " +
+            (userAnswers[i] !== undefined
+              ? q.options[userAnswers[i]]
+              : "Нет ответа");
+
+          const correctAnswer = document.createElement("div");
+          correctAnswer.textContent =
+            "Правильный ответ: " + q.options[q.answer];
+
+          const detail = document.createElement("div");
+          detail.style.cssText = "color:#56718d;margin-top:5px;";
+          detail.textContent = q.explanation;
+
+          item.append(title, yourAnswer, correctAnswer, detail);
+          $("review").appendChild(item);
+        });
+      }
+
+      $("next").addEventListener("click", function () {
+        if (!answered) return;
+
+        if (current < questions.length - 1) {
+          current++;
+          renderQuestion();
+        } else {
+          showResults();
+        }
+      });
+
+      $("restart").addEventListener("click", function () {
+        current = 0;
+        score = 0;
+        answered = false;
+        userAnswers.length = 0;
+
+        $("results").style.display = "none";
+        $("question-area").classList.remove("bq-hidden");
+        root.querySelector(".bq-header").classList.remove("bq-hidden");
+
+        renderQuestion();
+      });
+
+      renderQuestion();
+    })();
+  </script>
+</div>
