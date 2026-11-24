@@ -1,0 +1,606 @@
+<div id="bizarro-a2-quiz">
+  <style>
+    #bizarro-a2-quiz {
+      font-family: "Times New Roman", Times, serif;
+      color: #173d68;
+      background: #ffffff;
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 25px;
+      border: 1px solid #d8e5f2;
+      border-radius: 12px;
+      box-sizing: border-box;
+      line-height: 1.6;
+    }
+
+    #bizarro-a2-quiz * {
+      box-sizing: border-box;
+      font-family: "Times New Roman", Times, serif;
+    }
+
+    #bizarro-a2-quiz h2 {
+      color: #173d68;
+      font-size: 30px;
+      text-align: center;
+      margin: 0 0 8px;
+      font-weight: normal;
+    }
+
+    #bizarro-a2-quiz .bq-subtitle {
+      text-align: center;
+      color: #56718d;
+      font-size: 17px;
+      margin-bottom: 25px;
+    }
+
+    #bizarro-a2-quiz .bq-progress-text {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 15px;
+      margin-bottom: 8px;
+      color: #56718d;
+    }
+
+    #bizarro-a2-quiz .bq-progress-track {
+      width: 100%;
+      height: 8px;
+      background: #e8f0f8;
+      border-radius: 20px;
+      overflow: hidden;
+      margin-bottom: 25px;
+    }
+
+    #bizarro-a2-quiz .bq-progress-fill {
+      height: 100%;
+      width: 0;
+      background: #24558a;
+      transition: width 0.3s ease;
+    }
+
+    #bizarro-a2-quiz .bq-question-number {
+      color: #56718d;
+      font-size: 16px;
+      margin-bottom: 5px;
+    }
+
+    #bizarro-a2-quiz .bq-question {
+      color: #173d68;
+      font-size: 23px;
+      font-weight: bold;
+      line-height: 1.4;
+      margin: 0 0 10px;
+    }
+
+    #bizarro-a2-quiz .bq-instruction {
+      color: #56718d;
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+
+    #bizarro-a2-quiz .bq-options {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 11px;
+    }
+
+    #bizarro-a2-quiz .bq-option {
+      display: block;
+      width: 100%;
+      text-align: left;
+      background: #ffffff;
+      color: #173d68;
+      border: 1px solid #c9d9e9;
+      border-radius: 8px;
+      padding: 13px 16px;
+      font-size: 18px;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    #bizarro-a2-quiz .bq-option:hover:not(:disabled) {
+      background: #f0f6fc;
+      border-color: #24558a;
+    }
+
+    #bizarro-a2-quiz .bq-option:focus-visible,
+    #bizarro-a2-quiz .bq-button:focus-visible {
+      outline: 3px solid #8db6df;
+      outline-offset: 2px;
+    }
+
+    #bizarro-a2-quiz .bq-option:disabled {
+      cursor: default;
+      opacity: 1;
+    }
+
+    #bizarro-a2-quiz .bq-option.bq-correct {
+      background: #e3f4e8;
+      border: 2px solid #2e8b57;
+      color: #1d6038;
+      font-weight: bold;
+    }
+
+    #bizarro-a2-quiz .bq-option.bq-incorrect {
+      background: #fde8e7;
+      border: 2px solid #c94040;
+      color: #922b2b;
+      font-weight: bold;
+    }
+
+    #bizarro-a2-quiz .bq-feedback {
+      display: none;
+      margin-top: 18px;
+      padding: 15px 17px;
+      border-radius: 8px;
+      background: #edf6ff;
+      border-left: 4px solid #24558a;
+      color: #173d68;
+      font-size: 17px;
+    }
+
+    #bizarro-a2-quiz .bq-feedback.bq-show {
+      display: block;
+    }
+
+    #bizarro-a2-quiz .bq-feedback-title {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    #bizarro-a2-quiz .bq-explanation {
+      margin-top: 5px;
+    }
+
+    #bizarro-a2-quiz .bq-actions {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 22px;
+    }
+
+    #bizarro-a2-quiz .bq-button {
+      background: #24558a;
+      color: #ffffff;
+      border: 1px solid #24558a;
+      border-radius: 8px;
+      padding: 12px 25px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    #bizarro-a2-quiz .bq-button:hover:not(:disabled) {
+      background: #173d68;
+    }
+
+    #bizarro-a2-quiz .bq-button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    #bizarro-a2-quiz .bq-results {
+      display: none;
+      text-align: center;
+      padding: 15px 5px;
+    }
+
+    #bizarro-a2-quiz .bq-results h3 {
+      color: #173d68;
+      font-size: 27px;
+      margin: 0 0 12px;
+    }
+
+    #bizarro-a2-quiz .bq-score {
+      color: #24558a;
+      font-size: 38px;
+      font-weight: bold;
+      margin: 15px 0;
+    }
+
+    #bizarro-a2-quiz .bq-result-message {
+      color: #56718d;
+      font-size: 18px;
+      margin-bottom: 25px;
+    }
+
+    #bizarro-a2-quiz .bq-review {
+      text-align: left;
+      margin-top: 25px;
+    }
+
+    #bizarro-a2-quiz .bq-review-item {
+      border-top: 1px solid #d8e5f2;
+      padding: 14px 0;
+      font-size: 16px;
+    }
+
+    #bizarro-a2-quiz .bq-review-item strong {
+      color: #173d68;
+    }
+
+    #bizarro-a2-quiz .bq-hidden {
+      display: none !important;
+    }
+
+    @media (max-width: 520px) {
+      #bizarro-a2-quiz { padding: 18px; }
+      #bizarro-a2-quiz h2 { font-size: 26px; }
+      #bizarro-a2-quiz .bq-question { font-size: 21px; }
+      #bizarro-a2-quiz .bq-option { font-size: 17px; }
+    }
+  </style>
+
+  <div class="bq-header">
+    <h2>Португальский: тест A2</h2>
+    <div class="bq-subtitle">
+      Проверьте свои знания европейского португальского языка
+    </div>
+  </div>
+
+  <div class="bq-quiz-content">
+    <div class="bq-progress-text">
+      <span id="bqa2-progress-label">Вопрос 1 из 15</span>
+      <span id="bqa2-score-label">Баллы: 0</span>
+    </div>
+
+    <div class="bq-progress-track">
+      <div class="bq-progress-fill" id="bqa2-progress-fill"></div>
+    </div>
+
+    <div id="bqa2-question-area">
+      <div class="bq-question-number" id="bqa2-question-number">Вопрос 1</div>
+      <div class="bq-question" id="bqa2-question"></div>
+      <div class="bq-instruction">Выберите один правильный ответ.</div>
+      <div class="bq-options" id="bqa2-options"></div>
+
+      <div class="bq-feedback" id="bqa2-feedback" aria-live="polite">
+        <div class="bq-feedback-title" id="bqa2-feedback-title"></div>
+        <div id="bqa2-feedback-text"></div>
+        <div class="bq-explanation" id="bqa2-explanation"></div>
+      </div>
+
+      <div class="bq-actions">
+        <button type="button" class="bq-button" id="bqa2-next" disabled>
+          Следующий вопрос →
+        </button>
+      </div>
+    </div>
+
+    <div class="bq-results" id="bqa2-results" aria-live="polite">
+      <h3>Тест завершён!</h3>
+      <div class="bq-score" id="bqa2-final-score"></div>
+      <div class="bq-result-message" id="bqa2-result-message"></div>
+      <button type="button" class="bq-button" id="bqa2-restart">
+        Пройти тест ещё раз
+      </button>
+      <div class="bq-review" id="bqa2-review"></div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const root = document.getElementById("bizarro-a2-quiz");
+      if (!root || root.dataset.initialized === "true") return;
+      root.dataset.initialized = "true";
+
+      const questions = [
+        {
+          question: "Quando era criança, ___ muitas vezes com os meus primos, mas ontem ___ sozinha em casa.",
+          options: [
+            "brinquei / ficava",
+            "brincava / fiquei",
+            "brincava / ficava",
+            "brinquei / fiquei"
+          ],
+          answer: 1,
+          explanation: "O imperfeito («brincava») descreve um hábito no passado. O perfeito («fiquei») indica uma situação concreta e concluída ontem."
+        },
+        {
+          question: "Desculpe, este autocarro ___ à Praça do Comércio ou tenho de mudar?",
+          options: [
+            "chega",
+            "fica",
+            "vai",
+            "leva-se"
+          ],
+          answer: 2,
+          explanation: "Para perguntar se um autocarro vai a determinado destino, usamos «ir»: «Este autocarro vai à Praça do Comércio?»"
+        },
+        {
+          question: "Fui à casa da Marta e ___ os documentos, mas ela não estava em casa.",
+          options: [
+            "levei-lhe",
+            "levei-os-lhe",
+            "lhe levei-os",
+            "levei a ela os"
+          ],
+          answer: 0,
+          explanation: "«Levei-lhe os documentos» significa que levei os documentos à Marta. O pronome «lhe» substitui «à Marta» e aparece ligado ao verbo."
+        },
+        {
+          question: "Não consigo encontrar o meu telemóvel. Acho que o ___ no café.",
+          options: [
+            "deixava ontem",
+            "deixei",
+            "deixava sempre ontem",
+            "deixo amanhã"
+          ],
+          answer: 1,
+          explanation: "O pretérito perfeito («deixei») indica uma ação concluída num momento passado."
+        },
+        {
+          question: "A minha irmã trabalha ___ segunda-feira ___ sexta-feira.",
+          options: [
+            "desde / para",
+            "de / em",
+            "de / a",
+            "em / até a"
+          ],
+          answer: 2,
+          explanation: "A expressão «de segunda-feira a sexta-feira» indica o período entre dois dias da semana."
+        },
+        {
+          question: "Este exercício é bastante ___ do que o anterior.",
+          options: [
+            "mais difícil",
+            "dificílimo",
+            "difícil mais",
+            "o mais difícil do que"
+          ],
+          answer: 0,
+          explanation: "Para formar o comparativo de superioridade de «difícil», usamos «mais difícil do que»."
+        },
+        {
+          question: "Já compraste os bilhetes? — Sim, já ___ comprei ontem à noite.",
+          options: [
+            "lhes",
+            "os",
+            "nos",
+            "as"
+          ],
+          answer: 1,
+          explanation: "«Os bilhetes» é masculino plural e complemento direto. Substituímos o grupo nominal por «os»: «Sim, já os comprei». Em português europeu, o pronome aparece antes do verbo neste contexto afirmativo com «já»."
+        },
+        {
+          question: "A que horas é que ___ de casa esta manhã?",
+          options: [
+            "saíste",
+            "saíste-te",
+            "sais-te",
+            "saíste de"
+          ],
+          answer: 0,
+          explanation: "O pretérito perfeito de «sair» com «tu» é «saíste». O verbo não precisa do pronome «te» nesta frase."
+        },
+        {
+          question: "A Joana está habituada ___ cedo, porque começa a trabalhar às oito.",
+          options: [
+            "levantar-se",
+            "a levantar-se",
+            "de levantar-se",
+            "que se levanta"
+          ],
+          answer: 1,
+          explanation: "A construção correta é «estar habituado a + infinitivo»: «está habituada a levantar-se cedo»."
+        },
+        {
+          question: "Ontem perdi o comboio porque ___ muito trânsito na autoestrada.",
+          options: [
+            "esteve",
+            "estava",
+            "está",
+            "estará"
+          ],
+          answer: 1,
+          explanation: "O imperfeito («estava») descreve a situação que serviu de contexto para o acontecimento passado."
+        },
+        {
+          question: "A Ana chega daqui a dez minutos. Podes esperar por ___?",
+          options: [
+            "ela",
+            "lhe",
+            "a",
+            "se"
+          ],
+          answer: 0,
+          explanation: "Depois da preposição «por», usamos o pronome pessoal tónico: «esperar por ela»."
+        },
+        {
+          question: "Nunca ___ a Coimbra, mas gostava de visitar a cidade.",
+          options: [
+            "fui",
+            "ia",
+            "estive ontem",
+            "vou ontem"
+          ],
+          answer: 0,
+          explanation: "«Nunca fui a Coimbra» é uma forma natural de falar de uma experiência que não aconteceu até ao presente."
+        },
+        {
+          question: "O Pedro levantou-se, ___, vestiu-se e saiu de casa.",
+          options: [
+            "lavou os dentes",
+            "lavava os dentes",
+            "lava os dentes",
+            "lavará os dentes"
+          ],
+          answer: 0,
+          explanation: "A sequência de ações concluídas no passado pede o pretérito perfeito: levantou-se, lavou os dentes, vestiu-se e saiu."
+        },
+        {
+          question: "Não gosto deste restaurante. O outro é ___ e os empregados são mais simpáticos.",
+          options: [
+            "melhor",
+            "mais bom",
+            "ótimo do que",
+            "o melhor que"
+          ],
+          answer: 0,
+          explanation: "O comparativo irregular de «bom» é «melhor»: «O outro é melhor»."
+        },
+        {
+          question: "A que horas ___ amanhã? — Às sete, porque o meu voo parte às nove.",
+          options: [
+            "te levantaste",
+            "te levantas ontem",
+            "te vais levantar",
+            "levantaste-te amanhã"
+          ],
+          answer: 2,
+          explanation: "«Amanhã» indica o futuro. Em português europeu, é comum usar «ir + infinitivo»: «A que horas te vais levantar?»"
+        }
+      ];
+
+      let current = 0;
+      let score = 0;
+      let answered = false;
+      const userAnswers = [];
+
+      const $ = id => root.querySelector("#bqa2-" + id);
+
+      function renderQuestion() {
+        answered = false;
+        const q = questions[current];
+
+        $("question-number").textContent = "Вопрос " + (current + 1);
+        $("question").textContent = q.question;
+        $("progress-label").textContent =
+          "Вопрос " + (current + 1) + " из " + questions.length;
+        $("score-label").textContent = "Баллы: " + score;
+        $("progress-fill").style.width =
+          (current / questions.length * 100) + "%";
+
+        $("options").replaceChildren();
+        $("feedback").classList.remove("bq-show");
+        $("feedback-title").textContent = "";
+        $("feedback-text").textContent = "";
+        $("explanation").textContent = "";
+        $("next").disabled = true;
+        $("next").textContent = current === questions.length - 1
+          ? "Посмотреть результат →"
+          : "Следующий вопрос →";
+
+        q.options.forEach(function (option, index) {
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = "bq-option";
+          button.textContent = String.fromCharCode(65 + index) + ". " + option;
+          button.addEventListener("click", function () {
+            chooseAnswer(index);
+          });
+          $("options").appendChild(button);
+        });
+      }
+
+      function chooseAnswer(index) {
+        if (answered) return;
+        answered = true;
+
+        const q = questions[current];
+        const buttons = $("options").querySelectorAll(".bq-option");
+        const isCorrect = index === q.answer;
+        userAnswers[current] = index;
+
+        buttons.forEach(function (button, i) {
+          button.disabled = true;
+          if (i === q.answer) button.classList.add("bq-correct");
+          if (i === index && !isCorrect) button.classList.add("bq-incorrect");
+        });
+
+        if (isCorrect) {
+          score++;
+          $("feedback-title").textContent = "Правильно! Отличная работа!";
+          $("feedback-text").textContent = "Ваш ответ верный.";
+        } else {
+          $("feedback-title").textContent = "Не совсем!";
+          $("feedback-text").textContent =
+            "Правильный ответ: " + q.options[q.answer] + ".";
+        }
+
+        $("explanation").textContent = q.explanation;
+        $("feedback").classList.add("bq-show");
+        $("score-label").textContent = "Баллы: " + score;
+        $("next").disabled = false;
+      }
+
+      function showResults() {
+        $("question-area").classList.add("bq-hidden");
+        root.querySelector(".bq-header").classList.add("bq-hidden");
+        $("progress-label").textContent = "Тест завершён";
+        $("score-label").textContent = "Баллы: " + score;
+        $("progress-fill").style.width = "100%";
+        $("results").style.display = "block";
+
+        $("final-score").textContent = score + " / " + questions.length;
+
+        const percentage = score / questions.length;
+        let message;
+
+        if (percentage === 1) {
+          message = "Превосходно! Вы правильно ответили на все вопросы. Вы уверенно справляетесь с этими заданиями A2!";
+        } else if (percentage >= 0.8) {
+          message = "Отличный результат! Вы хорошо справляетесь с основными грамматическими структурами A2.";
+        } else if (percentage >= 0.6) {
+          message = "Хорошая работа! Повторите темы, в которых допустили ошибки, чтобы закрепить знания.";
+        } else if (percentage >= 0.4) {
+          message = "Вы уже знаете некоторые структуры A2. Продолжайте практиковаться и повторите объяснения.";
+        } else {
+          message = "Не расстраивайтесь! Используйте разбор ответов, чтобы определить, какие темы стоит повторить.";
+        }
+
+        $("result-message").textContent = message;
+        $("review").replaceChildren();
+
+        const heading = document.createElement("h3");
+        heading.style.cssText =
+          "font-size:22px;text-align:left;margin-top:25px;";
+        heading.textContent = "Разбор ответов";
+        $("review").appendChild(heading);
+
+        questions.forEach(function (q, i) {
+          const item = document.createElement("div");
+          item.className = "bq-review-item";
+
+          const title = document.createElement("strong");
+          title.textContent = (i + 1) + ". " + q.question;
+
+          const yourAnswer = document.createElement("div");
+          yourAnswer.textContent = "Ваш ответ: " +
+            (userAnswers[i] !== undefined ? q.options[userAnswers[i]] : "Нет ответа");
+
+          const correctAnswer = document.createElement("div");
+          correctAnswer.textContent = "Правильный ответ: " + q.options[q.answer];
+
+          const detail = document.createElement("div");
+          detail.style.cssText = "color:#56718d;margin-top:5px;";
+          detail.textContent = q.explanation;
+
+          item.append(title, yourAnswer, correctAnswer, detail);
+          $("review").appendChild(item);
+        });
+      }
+
+      $("next").addEventListener("click", function () {
+        if (!answered) return;
+        if (current < questions.length - 1) {
+          current++;
+          renderQuestion();
+        } else {
+          showResults();
+        }
+      });
+
+      $("restart").addEventListener("click", function () {
+        current = 0;
+        score = 0;
+        answered = false;
+        userAnswers.length = 0;
+        $("results").style.display = "none";
+        $("question-area").classList.remove("bq-hidden");
+        root.querySelector(".bq-header").classList.remove("bq-hidden");
+        renderQuestion();
+      });
+
+      renderQuestion();
+    })();
+  </script>
+</div>
