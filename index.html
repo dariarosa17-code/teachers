@@ -2,17 +2,269 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teachers' Game Library</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>The Teachers' Library</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Times New Roman", Times, serif;
+    background: #f8f7f2;
+    color: #263449;
+    line-height: 1.6;
+}
+
+/* HEADER */
+
+header {
+    background: #192c40;
+    color: #ffffff;
+    padding: 65px 8% 55px;
+    border-bottom: 4px solid #a68b4e;
+}
+
+.header-small {
+    color: #c6b27e;
+    font-size: 13px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+}
+
+header h1 {
+    font-size: clamp(38px, 6vw, 58px);
+    font-weight: normal;
+    margin-bottom: 15px;
+}
+
+header p {
+    max-width: 600px;
+    font-size: 18px;
+    color: #e3e5e5;
+}
+
+/* MAIN CONTENT */
+
+main {
+    max-width: 1100px;
+    margin: 65px auto;
+    padding: 0 25px;
+}
+
+.section-heading {
+    color: #526044;
+    font-size: 29px;
+    font-weight: normal;
+    margin-bottom: 8px;
+}
+
+.section-intro {
+    color: #77766e;
+    font-size: 16px;
+    margin-bottom: 30px;
+}
+
+.category {
+    margin-bottom: 65px;
+}
+
+.game-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+}
+
+/* GAME CARDS */
+
+.game-card {
+    background: #ffffff;
+    border: 1px solid #dedbd0;
+    border-top: 3px solid #a68b4e;
+    padding: 25px;
+    transition: border-color 0.2s;
+}
+
+.game-card:hover {
+    border-color: #65724e;
+}
+
+.game-number {
+    color: #a68b4e;
+    font-size: 13px;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+}
+
+.game-card h3 {
+    color: #263449;
+    font-size: 23px;
+    font-weight: normal;
+    margin-bottom: 10px;
+}
+
+.game-card p {
+    color: #77766e;
+    font-size: 16px;
+    margin-bottom: 22px;
+}
+
+.game-link {
+    display: inline-block;
+    color: #526044;
+    text-decoration: none;
+    border-bottom: 1px solid #a68b4e;
+    padding-bottom: 3px;
+    font-size: 16px;
+}
+
+.game-link:hover {
+    color: #a68b4e;
+}
+
+/* FOOTER */
+
+footer {
+    background: #192c40;
+    color: #e3e5e5;
+    text-align: center;
+    padding: 30px 20px;
+    border-top: 3px solid #a68b4e;
+}
+
+footer p {
+    font-size: 15px;
+}
+
+.footer-title {
+    color: #c6b27e;
+    margin-bottom: 7px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-size: 12px;
+}
+
+@media (max-width: 600px) {
+    header {
+        padding: 45px 25px;
+    }
+
+    main {
+        margin: 40px auto;
+    }
+
+    .game-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
 </head>
+
 <body>
-    <h1>Welcome to the Teachers' Game Library!</h1>
 
-    <h2>Games for Adults</h2>
-    <p><a href="/adults/a1-quiz/">A1 Portuguese Quiz</a></p>
+<header>
+    <div class="header-small">
+        Portuguese Language Resources
+    </div>
 
-    <h2>Other Games</h2>
-    <p><a href="/spellingbe/">Spelling Bee</a></p>
+    <h1>The Teachers' Library</h1>
+
+    <p>
+        A collection of interactive games, quizzes and
+        educational activities for Portuguese language learning.
+    </p>
+</header>
+
+<main>
+
+    <!-- ADULT LEARNERS -->
+
+    <section class="category">
+        <h2 class="section-heading">Adult Learners</h2>
+
+        <p class="section-intro">
+            Interactive activities for grammar, vocabulary
+            and everyday Portuguese.
+        </p>
+
+        <div class="game-grid">
+
+            <article class="game-card">
+                <div class="game-number">01 · QUIZ</div>
+
+                <h3>Portuguese A1 Quiz</h3>
+
+                <p>
+                    Practise your Portuguese with questions
+                    on grammar, vocabulary and comprehension.
+                </p>
+
+                <a class="game-link"
+                   href="/adults/a1-quiz/">
+                   Start activity →
+                </a>
+            </article>
+
+        </div>
+    </section>
+
+
+    <!-- CHILDREN -->
+
+    <section class="category">
+        <h2 class="section-heading">Children</h2>
+
+        <p class="section-intro">
+            Interactive games and playful activities
+            for younger learners.
+        </p>
+
+        <div class="game-grid">
+
+            <article class="game-card">
+                <div class="game-number">02 · WORD GAME</div>
+
+                <h3>Spelling Bee</h3>
+
+                <p>
+                    Practise spelling, vocabulary and
+                    word recognition through a game.
+                </p>
+
+                <a class="game-link"
+                   href="/spellingbe/">
+                   Start activity →
+                </a>
+            </article>
+
+        </div>
+    </section>
+
+
+    <!-- MORE RESOURCES -->
+
+    <section class="category">
+        <h2 class="section-heading">More Resources</h2>
+
+        <p class="section-intro">
+            New activities and learning materials
+            will be added to the collection.
+        </p>
+
+    </section>
+
+</main>
+
+<footer>
+    <div class="footer-title">The Teachers' Library</div>
+    <p>Interactive resources for Portuguese language learning.</p>
+</footer>
+
 </body>
 </html>
