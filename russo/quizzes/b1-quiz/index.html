@@ -1,0 +1,909 @@
+
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Quiz de Russo B1 | A Biblioteca da Professora Daria</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Times New Roman", serif;
+    background: #f8f7f2;
+    color: #263449;
+    line-height: 1.6;
+}
+
+header {
+    background: #192c40;
+    color: #fff;
+    text-align: center;
+    padding: 35px 20px;
+    border-bottom: 4px solid #a68b4e;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 30px;
+    font-weight: normal;
+}
+
+header p {
+    margin: 8px 0 0;
+    color: #e4dfd2;
+    font-size: 16px;
+}
+
+main {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.back-link {
+    display: inline-block;
+    margin-bottom: 25px;
+    color: #526044;
+    text-decoration: none;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
+.quiz-card {
+    background: #fff;
+    padding: 35px;
+    border: 1px solid #e5e1d7;
+    border-radius: 4px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.04);
+}
+
+.level {
+    color: #a68b4e;
+    letter-spacing: 2px;
+    font-size: 13px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+.quiz-title {
+    font-size: 27px;
+    font-weight: normal;
+    margin: 0 0 10px;
+}
+
+.description {
+    color: #6c7280;
+    margin-bottom: 25px;
+}
+
+.section-label {
+    display: inline-block;
+    color: #526044;
+    background: #edf0e8;
+    padding: 5px 12px;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.progress-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    color: #6c7280;
+    margin-bottom: 8px;
+}
+
+.progress-bar {
+    height: 7px;
+    background: #e9e6dd;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 25px;
+}
+
+.progress {
+    height: 100%;
+    width: 0%;
+    background: #a68b4e;
+    transition: width 0.3s ease;
+}
+
+.question {
+    font-size: 22px;
+    margin: 20px 0;
+    line-height: 1.5;
+}
+
+.question-text {
+    background: #f8f7f2;
+    border-left: 3px solid #a68b4e;
+    padding: 16px 20px;
+    margin: 20px 0;
+    font-size: 19px;
+    line-height: 1.7;
+}
+
+.question-text .translation {
+    display: block;
+    color: #77766e;
+    font-size: 14px;
+    margin-top: 10px;
+    font-style: italic;
+}
+
+.options {
+    display: grid;
+    gap: 12px;
+}
+
+.option {
+    background: #f8f7f2;
+    border: 1px solid #dedbd1;
+    padding: 13px 16px;
+    text-align: left;
+    font-family: "Times New Roman", serif;
+    font-size: 17px;
+    color: #263449;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: 0.2s;
+}
+
+.option:hover:not(:disabled) {
+    border-color: #a68b4e;
+    background: #f2efe6;
+}
+
+.option:disabled {
+    cursor: default;
+}
+
+.option.correct {
+    background: #edf2e9;
+    border-color: #71845f;
+}
+
+.option.incorrect {
+    background: #f6ece8;
+    border-color: #b77b6c;
+}
+
+.feedback {
+    margin-top: 20px;
+    padding: 13px 15px;
+    display: none;
+    background: #f8f7f2;
+    border-left: 3px solid #a68b4e;
+}
+
+.next-btn, .restart-btn {
+    display: none;
+    margin-top: 25px;
+    background: #192c40;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    font-family: "Times New Roman", serif;
+    font-size: 17px;
+    cursor: pointer;
+}
+
+.next-btn:hover, .restart-btn:hover {
+    background: #30465e;
+}
+
+.result {
+    display: none;
+    text-align: center;
+}
+
+.stars {
+    color: #a68b4e;
+    font-size: 35px;
+    letter-spacing: 5px;
+    margin: 20px 0;
+}
+
+.result h2 {
+    font-size: 28px;
+    font-weight: normal;
+}
+
+.result p {
+    font-size: 18px;
+}
+
+.result-details {
+    text-align: left;
+    margin-top: 30px;
+    padding: 20px;
+    background: #f8f7f2;
+}
+
+.result-details p {
+    font-size: 16px;
+    margin: 8px 0;
+}
+
+footer {
+    background: #192c40;
+    color: #e4dfd2;
+    text-align: center;
+    padding: 20px;
+    margin-top: 60px;
+    border-top: 3px solid #a68b4e;
+    font-size: 14px;
+}
+
+@media (max-width: 600px) {
+    .quiz-card {
+        padding: 23px;
+    }
+
+    header h1 {
+        font-size: 25px;
+    }
+
+    .question {
+        font-size: 20px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>A Biblioteca da Professora Daria</h1>
+    <p>Aprender russo passo a passo</p>
+</header>
+
+<main>
+
+<a class="back-link" href="/russo/quizzes/">← Voltar aos quizzes</a>
+
+<div class="quiz-card">
+
+    <div id="quizArea">
+
+        <div class="level">Russo · Nível B1</div>
+
+        <h2 class="quiz-title">Quiz de conhecimentos</h2>
+
+        <p class="description">
+            30 perguntas para avaliar a tua gramática, vocabulário,
+            compreensão de textos e capacidade de dedução em russo.
+        </p>
+
+        <div class="progress-info">
+            <span id="questionNumber">Pergunta 1 de 30</span>
+            <span id="score">Pontuação: 0</span>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress" id="progress"></div>
+        </div>
+
+        <div class="section-label" id="sectionLabel">Parte 1 · Gramática</div>
+
+        <div class="question" id="question"></div>
+
+        <div class="question-text" id="questionText" style="display:none"></div>
+
+        <div class="options" id="options"></div>
+
+        <div class="feedback" id="feedback"></div>
+
+        <button class="next-btn" id="nextBtn" onclick="nextQuestion()">
+            Próxima pergunta →
+        </button>
+
+    </div>
+
+    <div class="result" id="result">
+
+        <div class="level">Quiz concluído</div>
+
+        <h2>Parabéns por teres chegado ao fim!</h2>
+
+        <div class="stars" id="stars"></div>
+
+        <p id="finalScore"></p>
+
+        <p id="resultMessage"></p>
+
+        <div class="result-details">
+            <h3 style="font-weight:normal">Resultados por categoria</h3>
+            <p id="grammarResult"></p>
+            <p id="vocabularyResult"></p>
+            <p id="logicResult"></p>
+        </div>
+
+        <button class="restart-btn" style="display:inline-block" onclick="restartQuiz()">
+            Repetir o quiz
+        </button>
+
+    </div>
+
+</div>
+</main>
+
+<footer>
+    A Biblioteca da Professora Daria · Aprender com curiosidade
+</footer>
+
+<script>
+
+const questions = [
+
+/* ==========================================
+   PARTE 1 — GRAMÁTICA (PERGUNTAS 1–10)
+========================================== */
+
+{
+    section: "Parte 1 · Gramática",
+    question: "Выбери правильный вариант: Когда я пришёл домой, мама уже ___ ужин.",
+    options: ["готовила", "приготовила", "готовит"],
+    answer: 1,
+    explanation: "«Уже приготовила» indica que a mãe já tinha terminado de preparar o jantar antes de eu chegar. O verbo perfectivo «приготовить» destaca a ação concluída."
+},
+
+{
+    section: "Parte 1 · Gramática",
+    question: "Выбери правильный вариант: Если бы у меня было больше времени, я ___ русский каждый день.",
+    options: ["учу", "учил бы", "буду учить"],
+    answer: 1,
+    explanation: "Para expressar uma situação hipotética, usamos o passado seguido da partícula «бы»: «учил бы»."
+},
+
+{
+    section: "Parte 1 · Gramática",
+    question: "Выбери правильный вариант: Она сказала, что завтра ___ к нам.",
+    options: ["приходит", "пришла", "придёт"],
+    answer: 2,
+    explanation: "A frase refere-se ao futuro: «завтра придёт» significa que ela virá amanhã."
+},
+
+{
+    section: "Parte 1 · Gramática",
+    question: "Выбери правильный вариант: Я давно не виделся ___ своим школьным другом.",
+    options: ["с", "к", "у"],
+    answer: 0,
+    explanation: "A expressão «видеться с кем-либо» exige a preposição «с» e o caso instrumental: «с другом»."
+},
+
+{
+    section: "Parte 1 · Gramática",
+    question: "Выбери правильный вариант: Несмотря ___ плохую погоду, мы пошли гулять.",
+    options: ["на", "из-за", "о"],
+    answer: 0,
+    explanation: "A expressão «несмотря на» significa apesar de e é seguida pelo acusativo: «на плохую погоду»."
+},
+
+{
+    section: "Parte 1 · Gramática",
+    question: "Выбери правильный вариант: Это самый интересный фильм, который я когда-либо ___.",
+    options: ["смотрю", "смотрел", "посмотрю"],
+    answer: 1,
+    explanation: "A expressão «когда-либо» significa alguma vez. O passado «смотрел» é adequado para falar de uma experiência anterior."
+},
+
+{
+    section: "Parte 1 · Gramática",
+    question: "Выбери правильный вариант: Мне нравится город, в ___ я родился.",
+    options: ["который", "котором", "которого"],
+    answer: 1,
+    explanation: "A preposição «в» indica aqui o local onde nasci e exige o caso preposicional: «в котором»."
+},
+
+{
+    section: "Parte 1 · Gramática",
+    question: "Выбери правильный вариант: Я не пошёл на работу, ___ заболел.",
+    options: ["хотя", "потому что", "чтобы"],
+    answer: 1,
+    explanation: "«Потому что» significa porque e introduz uma explicação ou causa."
+},
+
+{
+    section: "Parte 1 · Gramática",
+    question: "Выбери правильный вариант: Когда мы приехали на вокзал, поезд уже ___.",
+    options: ["уезжал", "уехал", "уезжает"],
+    answer: 1,
+    explanation: "«Уже уехал» indica que o comboio já tinha partido. O verbo perfectivo «уехать» destaca a ação concluída."
+},
+
+{
+    section: "Parte 1 · Gramática",
+    question: "Выбери правильный вариант: Моя сестра говорит по-русски гораздо ___, чем я.",
+    options: ["свободнее", "свободный", "свободно"],
+    answer: 0,
+    explanation: "«Свободнее» é o comparativo de «свободно». Significa mais fluentemente ou com maior à-vontade."
+},
+
+/* ==========================================
+   PARTE 2 — VOCABULÁRIO E INTERPRETAÇÃO
+   PERGUNTAS 11–20
+========================================== */
+
+{
+    section: "Parte 2 · Vocabulário e interpretação",
+    question: "На улице сильный дождь и холодно. Что лучше надеть?",
+    options: [
+        "Сандалии и футболку",
+        "Пальто и непромокаемую обувь",
+        "Шорты и солнцезащитные очки"
+    ],
+    answer: 1,
+    explanation: "Está a chover muito e está frio. Um casaco e calçado impermeável são as opções mais adequadas."
+},
+
+{
+    section: "Parte 2 · Vocabulário e interpretação",
+    question: "У меня болит голова и высокая температура. К кому мне лучше обратиться?",
+    options: [
+        "К врачу",
+        "К парикмахеру",
+        "К повару"
+    ],
+    answer: 0,
+    explanation: "«Врач» significa médico. Se temos dores de cabeça e febre, devemos procurar assistência médica."
+},
+
+{
+    section: "Parte 2 · Vocabulário e interpretação",
+    question: "Прочитай текст и ответь на вопрос.",
+    text: "Анна работает в офисе с понедельника по пятницу. По выходным она обычно ездит за город, гуляет в лесу или встречается с друзьями. В это воскресенье она решила остаться дома, потому что ей нужно подготовиться к экзамену.",
+    questionAfterText: "Почему Анна останется дома в воскресенье?",
+    options: [
+        "Потому что она заболела.",
+        "Потому что ей нужно готовиться к экзамену.",
+        "Потому что она работает в офисе."
+    ],
+    answer: 1,
+    explanation: "O texto explica que Anna decidiu ficar em casa porque precisa de se preparar para um exame."
+},
+
+{
+    section: "Parte 2 · Vocabulário e interpretação",
+    question: "Выбери слово, которое лучше всего подходит: Перед поездкой нужно купить билеты и ___ гостиницу.",
+    options: [
+        "забронировать",
+        "потерять",
+        "отменить"
+    ],
+    answer: 0,
+    explanation: "«Забронировать гостиницу» significa reservar um hotel. É a expressão adequada neste contexto."
+},
+
+{
+    section: "Parte 2 · Vocabulário e interpretação",
+    question: "Что означает выражение «держать слово»?",
+    options: [
+        "Говорить очень громко",
+        "Выполнять обещание",
+        "Запоминать новые слова"
+    ],
+    answer: 1,
+    explanation: "«Держать слово» é uma expressão idiomática que significa cumprir uma promessa."
+},
+
+{
+    section: "Parte 2 · Vocabulário e interpretação",
+    question: "Прочитай текст и ответь на вопрос.",
+    text: "Вчера вечером Сергей хотел посмотреть новый фильм, но телевизор не работал. Поэтому он взял книгу, которую давно хотел прочитать, и провёл весь вечер за чтением.",
+    questionAfterText: "Что Сергей делал вчера вечером?",
+    options: [
+        "Смотрел новый фильм.",
+        "Читал книгу.",
+        "Ремонтировал телевизор."
+    ],
+    answer: 1,
+    explanation: "Como o televisor não funcionava, Sergey pegou num livro e passou a noite a ler."
+},
+
+{
+    section: "Parte 2 · Vocabulário e interpretação",
+    question: "Какое слово является синонимом слова «смелый»?",
+    options: [
+        "Храбрый",
+        "Скучный",
+        "Усталый"
+    ],
+    answer: 0,
+    explanation: "«Храбрый» e «смелый» são sinónimos e significam corajoso."
+},
+
+{
+    section: "Parte 2 · Vocabulário e interpretação",
+    question: "В магазине продавец спрашивает: «Вам помочь?» Как лучше ответить, если ты хочешь примерить пальто?",
+    options: [
+        "Можно примерить это пальто?",
+        "Где находится вокзал?",
+        "Сколько сейчас времени?"
+    ],
+    answer: 0,
+    explanation: "«Можно примерить это пальто?» significa Posso experimentar este casaco? É a resposta adequada numa loja."
+},
+
+{
+    section: "Parte 2 · Vocabulário e interpretação",
+    question: "Прочитай отрывок и выбери правильный ответ.",
+    text: "Я помню чудное мгновенье: Передо мной явилась ты...",
+    translation: "Alexander Pushkin — «К ***» (Я помню чудное мгновенье).",
+    questionAfterText: "Какое чувство лучше всего передаёт этот отрывок?",
+    options: [
+        "Восхищение и любовь",
+        "Гнев и разочарование",
+        "Страх и тревогу"
+    ],
+    answer: 0,
+    explanation: "O excerto do poema de Pushkin transmite admiração e um sentimento amoroso perante a pessoa amada."
+},
+
+{
+    section: "Parte 2 · Vocabulário e interpretação",
+    question: "Выбери правильное слово: После долгой работы мне нужно немного ___, чтобы восстановить силы.",
+    options: [
+        "отдохнуть",
+        "торопиться",
+        "спорить"
+    ],
+    answer: 0,
+    explanation: "«Отдохнуть» significa descansar. Depois de muito trabalho, precisamos de descansar para recuperar energias."
+},
+
+/* ==========================================
+   PARTE 3 — COMPREENSÃO E DEDUÇÃO LÓGICA
+   PERGUNTAS 21–30
+========================================== */
+
+{
+    section: "Parte 3 · Compreensão e dedução lógica",
+    question: "Пётр всегда просыпается в восемь часов утра. Что можно заключить?",
+    options: [
+        "Пётр обычно рано начинает свой день.",
+        "Пётр никогда не завтракает.",
+        "Пётр всегда ложится спать в полночь."
+    ],
+    answer: 0,
+    explanation: "Se Pedro acorda sempre às oito da manhã, podemos concluir que começa habitualmente o seu dia de manhã. Não temos informação sobre os seus hábitos de sono ou pequeno-almoço."
+},
+
+{
+    section: "Parte 3 · Compreensão e dedução lógica",
+    question: "Мария не ест мясо и рыбу, но ест овощи, фрукты и молочные продукты. Как можно описать её питание?",
+    options: [
+        "Она придерживается вегетарианского питания.",
+        "Она ест только мясо.",
+        "Она не ест никаких продуктов животного происхождения."
+    ],
+    answer: 0,
+    explanation: "Maria não come carne nem peixe, mas consome produtos lácteos. Podemos concluir que segue uma alimentação vegetariana, não vegan."
+},
+
+{
+    section: "Parte 3 · Compreensão e dedução lógica",
+    question: "Автобус отправляется в 9:00. Иван пришёл на остановку в 9:15. Что, скорее всего, произошло?",
+    options: [
+        "Иван пришёл слишком рано.",
+        "Автобус уже уехал.",
+        "Автобус ещё не приехал."
+    ],
+    answer: 1,
+    explanation: "O autocarro partiu às nove. Ivan chegou quinze minutos depois, por isso, segundo o horário indicado, o autocarro já tinha partido."
+},
+
+{
+    section: "Parte 3 · Compreensão e dedução lógica",
+    question: "Ольга каждый вечер читает по тридцать страниц. За три вечера она прочитает девяносто страниц. Что можно заключить?",
+    options: [
+        "Она читает очень редко.",
+        "Она читает каждый вечер.",
+        "Она закончила всю книгу."
+    ],
+    answer: 1,
+    explanation: "O enunciado diz que Olga lê todas as noites. Podemos concluir que tem o hábito de ler diariamente. Não sabemos se terminou o livro."
+},
+
+{
+    section: "Parte 3 · Compreensão e dedução lógica",
+    question: "Сегодня понедельник. Елена сказала, что встретится с другом через два дня. Когда состоится встреча?",
+    options: [
+        "Во вторник",
+        "В среду",
+        "В четверг"
+    ],
+    answer: 1,
+    explanation: "Dois dias depois de segunda-feira é quarta-feira: terça-feira é um dia depois e quarta-feira são dois."
+},
+
+{
+    section: "Parte 3 · Compreensão e dedução lógica",
+    question: "Все студенты группы сдали экзамен, кроме Андрея. Что можно заключить?",
+    options: [
+        "Андрей тоже сдал экзамен.",
+        "Никто не сдал экзамен.",
+        "Андрей не сдал экзамен."
+    ],
+    answer: 2,
+    explanation: "A expressão «кроме Андрея» significa exceto o Andrei. Portanto, todos passaram, com exceção dele."
+},
+
+{
+    section: "Parte 3 · Compreensão e dedução lógica",
+    question: "Наташа вышла из дома без зонта. Через десять минут начался сильный дождь. Что, вероятно, произошло?",
+    options: [
+        "Она могла промокнуть.",
+        "Она обязательно осталась сухой.",
+        "Дождь начался до её выхода."
+    ],
+    answer: 0,
+    explanation: "Como saiu sem guarda-chuva e começou a chover, é provável que se tenha molhado. Não podemos afirmar com certeza que isso aconteceu."
+},
+
+{
+    section: "Parte 3 · Compreensão e dedução lógica",
+    question: "В магазине было десять яблок. Покупатель купил четыре, а продавец добавил ещё три. Сколько яблок теперь в магазине?",
+    options: [
+        "Шесть",
+        "Девять",
+        "Тринадцать"
+    ],
+    answer: 1,
+    explanation: "Começamos com dez maçãs. Foram compradas quatro, ficando seis. Depois foram acrescentadas mais três: seis mais três são nove."
+},
+
+{
+    section: "Parte 3 · Compreensão e dedução lógica",
+    question: "Игорь любит зиму, потому что обожает кататься на лыжах. Какое занятие ему, вероятно, нравится?",
+    options: [
+        "Кататься на лыжах.",
+        "Загорать на пляже.",
+        "Собирать грибы осенью."
+    ],
+    answer: 0,
+    explanation: "O enunciado afirma diretamente que Igor adora esquiar. Portanto, essa é a atividade de que gosta."
+},
+
+{
+    section: "Parte 3 · Compreensão e dedução lógica",
+    question: "Анна учит русский язык уже три года. Она понимает большинство разговоров и может читать статьи без словаря. Что можно заключить?",
+    options: [
+        "Она совсем не знает русский язык.",
+        "Она уже приобрела достаточно хорошие навыки русского языка.",
+        "Она никогда не читает по-русски."
+    ],
+    answer: 1,
+    explanation: "Anna compreende a maioria das conversas e consegue ler artigos sem dicionário. Podemos concluir que desenvolveu boas competências em russo."
+}
+
+];
+
+let currentQuestion = 0;
+let points = 0;
+let answered = false;
+
+let categoryScores = {
+    grammar: 0,
+    vocabulary: 0,
+    logic: 0
+};
+
+function loadQuestion() {
+
+    answered = false;
+
+    const q = questions[currentQuestion];
+
+    document.getElementById("questionNumber").textContent =
+        `Pergunta ${currentQuestion + 1} de ${questions.length}`;
+
+    document.getElementById("score").textContent =
+        `Pontuação: ${points}`;
+
+    document.getElementById("progress").style.width =
+        `${(currentQuestion / questions.length) * 100}%`;
+
+    document.getElementById("sectionLabel").textContent = q.section;
+
+    document.getElementById("question").textContent = q.question;
+
+    const questionText = document.getElementById("questionText");
+
+    if (q.text) {
+
+        let extraText = q.translation
+            ? `<span class="translation">${q.translation}</span>`
+            : "";
+
+        questionText.innerHTML =
+            `${q.text}${extraText}`;
+
+        questionText.style.display = "block";
+
+        if (q.questionAfterText) {
+            document.getElementById("question").textContent =
+                q.questionAfterText;
+        }
+
+    } else {
+        questionText.style.display = "none";
+        questionText.innerHTML = "";
+    }
+
+    const optionsDiv = document.getElementById("options");
+
+    optionsDiv.innerHTML = "";
+
+    q.options.forEach((option, index) => {
+
+        const button = document.createElement("button");
+
+        button.className = "option";
+        button.textContent = option;
+
+        button.onclick = () => checkAnswer(index, button);
+
+        optionsDiv.appendChild(button);
+
+    });
+
+    document.getElementById("feedback").style.display = "none";
+
+    document.getElementById("nextBtn").style.display = "none";
+}
+
+function checkAnswer(selected, button) {
+
+    if (answered) return;
+
+    answered = true;
+
+    const q = questions[currentQuestion];
+
+    const allOptions = document.querySelectorAll(".option");
+
+    const feedback = document.getElementById("feedback");
+
+    allOptions.forEach(option => option.disabled = true);
+
+    if (selected === q.answer) {
+
+        points++;
+
+        button.classList.add("correct");
+
+        if (currentQuestion < 10) {
+            categoryScores.grammar++;
+        } else if (currentQuestion < 20) {
+            categoryScores.vocabulary++;
+        } else {
+            categoryScores.logic++;
+        }
+
+        feedback.innerHTML =
+            "<strong>Correto!</strong> " + q.explanation;
+
+    } else {
+
+        button.classList.add("incorrect");
+
+        allOptions[q.answer].classList.add("correct");
+
+        feedback.innerHTML =
+            "<strong>Não está correto.</strong> " + q.explanation;
+
+    }
+
+    feedback.style.display = "block";
+
+    document.getElementById("score").textContent =
+        `Pontuação: ${points}`;
+
+    const nextBtn = document.getElementById("nextBtn");
+
+    nextBtn.style.display = "inline-block";
+
+    nextBtn.textContent =
+        currentQuestion === questions.length - 1
+        ? "Ver resultados →"
+        : "Próxima pergunta →";
+}
+
+function nextQuestion() {
+
+    currentQuestion++;
+
+    if (currentQuestion < questions.length) {
+
+        loadQuestion();
+
+    } else {
+
+        showResults();
+
+    }
+}
+
+function showResults() {
+
+    document.getElementById("quizArea").style.display = "none";
+
+    document.getElementById("result").style.display = "block";
+
+    document.getElementById("progress").style.width = "100%";
+
+    let stars;
+    let message;
+
+    if (points === 30) {
+
+        stars = "★★★★★";
+
+        message = "Excelente! Demonstraste um domínio muito sólido dos conteúdos deste quiz.";
+
+    } else if (points >= 20) {
+
+        stars = "★★★☆☆";
+
+        message = "Muito bem! Tens uma boa base de russo B1. Continua a praticar para aperfeiçoares os teus conhecimentos.";
+
+    } else {
+
+        stars = "★☆☆☆☆";
+
+        message = "Ainda há alguns conteúdos para rever. Não desistas: a prática constante é essencial para progredires.";
+
+    }
+
+    document.getElementById("stars").textContent = stars;
+
+    document.getElementById("finalScore").textContent =
+        `Acertaste em ${points} de ${questions.length} perguntas.`;
+
+    document.getElementById("resultMessage").textContent = message;
+
+    document.getElementById("grammarResult").textContent =
+        `Gramática: ${categoryScores.grammar}/10`;
+
+    document.getElementById("vocabularyResult").textContent =
+        `Vocabulário e interpretação: ${categoryScores.vocabulary}/10`;
+
+    document.getElementById("logicResult").textContent =
+        `Compreensão e dedução lógica: ${categoryScores.logic}/10`;
+}
+
+function restartQuiz() {
+
+    currentQuestion = 0;
+
+    points = 0;
+
+    categoryScores = {
+        grammar: 0,
+        vocabulary: 0,
+        logic: 0
+    };
+
+    document.getElementById("result").style.display = "none";
+
+    document.getElementById("quizArea").style.display = "block";
+
+    loadQuestion();
+}
+
+loadQuestion();
+
+</script>
+
+</body>
+</html>
