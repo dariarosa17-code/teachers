@@ -1,11 +1,11 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-PT">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Russian A1 Quiz</title>
+<title>Quiz de Russo A1</title>
 
 <style>
 * {
@@ -249,21 +249,21 @@ footer {
 <div class="container">
 
     <header class="header">
-        <div class="small-heading">Russian · Beginner Level</div>
+        <div class="small-heading">Russo · Nível Elementar</div>
 
-        <h1>Russian A1 Quiz</h1>
+        <h1>Quiz de Russo A1</h1>
 
         <p class="intro">
-            Test your knowledge of basic Russian grammar,
-            vocabulary and everyday expressions.
+            Testa os teus conhecimentos de vocabulário,
+            gramática e expressões básicas em russo.
         </p>
     </header>
 
     <div id="quiz">
 
         <div class="progress-info">
-            <span id="question-counter">Question 1 of 15</span>
-            <span id="score-counter">Score: 0</span>
+            <span id="question-counter">Pergunta 1 de 15</span>
+            <span id="score-counter">Pontuação: 0</span>
         </div>
 
         <div class="progress-bar">
@@ -273,7 +273,7 @@ footer {
         <div class="quiz-card">
 
             <div class="question-number" id="question-label">
-                QUESTION 01
+                PERGUNTA 01
             </div>
 
             <h2 class="question" id="question"></h2>
@@ -286,7 +286,7 @@ footer {
 
             <button class="next-button" id="next-button"
                 onclick="nextQuestion()">
-                Next question →
+                Próxima pergunta →
             </button>
 
         </div>
@@ -295,9 +295,9 @@ footer {
 
     <div class="result" id="result">
 
-        <div class="small-heading">Russian · A1</div>
+        <div class="small-heading">Russo · A1</div>
 
-        <h2>Quiz completed!</h2>
+        <h2>Quiz concluído!</h2>
 
         <div class="stars" id="stars"></div>
 
@@ -306,13 +306,13 @@ footer {
         <p class="result-message" id="result-message"></p>
 
         <button class="restart-button" onclick="restartQuiz()">
-            Try again
+            Repetir o quiz
         </button>
 
     </div>
 
     <a class="back-link" href="/russo/quizzes/">
-        ← Back to Russian quizzes
+        ← Voltar aos quizzes de russo
     </a>
 
     <footer>
@@ -326,131 +326,131 @@ footer {
 const questions = [
 
 {
-    question: 'What does "Привет" mean?',
-    translation: 'Choose the correct translation.',
-    answers: ['Goodbye', 'Hello / Hi', 'Thank you'],
+    question: 'O que significa «Привет»?',
+    translation: 'Escolhe a tradução correta.',
+    answers: ['Adeus', 'Olá', 'Obrigado'],
     correct: 1,
-    explanation: 'Привет means Hello or Hi. It is an informal greeting.'
+    explanation: 'Привет significa Olá. É uma saudação informal.'
 },
 
 {
-    question: 'What does "Как тебя зовут?" mean?',
+    question: 'O que significa «Как тебя зовут?»?',
     translation: 'Как тебя зовут?',
     answers: [
-        'How old are you?',
-        'Where are you from?',
-        'What is your name?'
+        'Quantos anos tens?',
+        'De onde és?',
+        'Como te chamas?'
     ],
     correct: 2,
-    explanation: 'Как тебя зовут? means What is your name?'
+    explanation: 'Как тебя зовут? significa Como te chamas?'
 },
 
 {
-    question: 'Complete the sentence: Меня ___ Анна.',
-    translation: 'My name is Anna.',
+    question: 'Completa a frase: Меня ___ Анна.',
+    translation: 'Chamo-me Ana.',
     answers: ['зовут', 'живёт', 'говорю'],
     correct: 0,
-    explanation: 'Меня зовут Анна means My name is Anna.'
+    explanation: 'Меня зовут Анна significa Chamo-me Ana.'
 },
 
 {
-    question: 'Choose the correct word: Это ___ книга.',
-    translation: 'This is my book.',
+    question: 'Escolhe a opção correta: Это ___ книга.',
+    translation: 'Este é o meu livro.',
     answers: ['мой', 'моя', 'моё'],
     correct: 1,
-    explanation: 'Книга is feminine, so we use моя.'
+    explanation: 'Книга é um nome feminino. Por isso, utilizamos моя.'
 },
 
 {
-    question: 'Complete the sentence: Он ___ студент.',
-    translation: 'He is a student.',
+    question: 'Completa a frase: Он ___ студент.',
+    translation: 'Ele é estudante.',
     answers: ['есть', 'быть', '—'],
     correct: 2,
-    explanation: 'In the present tense, the verb быть (to be) is normally omitted in simple sentences.'
+    explanation: 'Em frases simples no presente, o verbo ser (быть) é normalmente omitido em russo.'
 },
 
 {
-    question: 'How do you say "I am from Portugal" in Russian?',
-    translation: 'Choose the correct sentence.',
+    question: 'Como se diz «Sou de Portugal» em russo?',
+    translation: 'Escolhe a frase correta.',
     answers: [
         'Я из Португалии.',
         'Я в Португалии.',
         'Ты из Португалии.'
     ],
     correct: 0,
-    explanation: 'Я из Португалии means I am from Portugal.'
+    explanation: 'Я из Португалии significa Sou de Portugal.'
 },
 
 {
-    question: 'What number is "семь"?',
-    translation: 'Choose the correct number.',
-    answers: ['Five (5)', 'Seven (7)', 'Nine (9)'],
+    question: 'Que número corresponde a «семь»?',
+    translation: 'Escolhe a resposta correta.',
+    answers: ['Cinco (5)', 'Sete (7)', 'Nove (9)'],
     correct: 1,
-    explanation: 'Семь means seven.'
+    explanation: 'Семь significa sete.'
 },
 
 {
-    question: 'What does "Где?" mean?',
-    translation: 'Choose the correct translation.',
-    answers: ['When?', 'Who?', 'Where?'],
+    question: 'O que significa «Где?»?',
+    translation: 'Escolhe a tradução correta.',
+    answers: ['Quando?', 'Quem?', 'Onde?'],
     correct: 2,
-    explanation: 'Где? means Where?'
+    explanation: 'Где? significa Onde?'
 },
 
 {
-    question: 'Complete the sentence: Я говорю ___-русски.',
-    translation: 'I speak Russian.',
+    question: 'Completa a frase: Я говорю ___-русски.',
+    translation: 'Eu falo russo.',
     answers: ['на', 'по', 'в'],
     correct: 1,
-    explanation: 'The correct expression is говорить по-русски.'
+    explanation: 'A expressão correta é говорить по-русски, que significa falar russo.'
 },
 
 {
-    question: 'Complete the sentence: У меня ___ брат.',
-    translation: 'I have a brother.',
+    question: 'Completa a frase: У меня ___ брат.',
+    translation: 'Tenho um irmão.',
     answers: ['есть', 'быть', 'имею'],
     correct: 0,
-    explanation: 'У меня есть брат is the standard beginner expression for I have a brother.'
+    explanation: 'У меня есть брат é a expressão habitual para dizer Tenho um irmão.'
 },
 
 {
-    question: 'What does "Кто это?" mean?',
-    translation: 'Choose the correct translation.',
-    answers: ['Who is this?', 'What is this?', 'Where is this?'],
+    question: 'O que significa «Кто это?»?',
+    translation: 'Escolhe a tradução correta.',
+    answers: ['Quem é?', 'O que é?', 'Onde está?'],
     correct: 0,
-    explanation: 'Кто это? means Who is this?'
+    explanation: 'Кто это? significa Quem é?'
 },
 
 {
-    question: 'What day is "понедельник"?',
-    translation: 'Choose the correct day.',
-    answers: ['Friday', 'Monday', 'Sunday'],
+    question: 'Que dia da semana significa «понедельник»?',
+    translation: 'Escolhe a resposta correta.',
+    answers: ['Sexta-feira', 'Segunda-feira', 'Domingo'],
     correct: 1,
-    explanation: 'Понедельник means Monday.'
+    explanation: 'Понедельник significa segunda-feira.'
 },
 
 {
-    question: 'Complete the sentence: Она живёт ___ Москве.',
-    translation: 'She lives in Moscow.',
+    question: 'Completa a frase: Она живёт ___ Москве.',
+    translation: 'Ela vive em Moscovo.',
     answers: ['на', 'из', 'в'],
     correct: 2,
-    explanation: 'We say жить в Москве (to live in Moscow).'
+    explanation: 'Utilizamos в Москве para dizer em Moscovo.'
 },
 
 {
-    question: 'Complete the sentence: Я хочу ___ .',
-    translation: 'I want tea.',
+    question: 'Completa a frase: Я хочу ___ .',
+    translation: 'Quero chá.',
     answers: ['чай', 'чаям', 'чае'],
     correct: 0,
-    explanation: 'Я хочу чай means I want tea. Чай is the correct form here.'
+    explanation: 'Я хочу чай significa Quero chá. Neste contexto, utilizamos чай.'
 },
 
 {
-    question: 'What is the correct response to "Спасибо"?',
-    translation: 'Someone says thank you. What do you reply?',
+    question: 'Qual é a resposta adequada a «Спасибо»?',
+    translation: 'Alguém agradece-te. O que respondes?',
     answers: ['Пожалуйста', 'До свидания', 'Доброе утро'],
     correct: 0,
-    explanation: 'Пожалуйста means You are welcome.'
+    explanation: 'Пожалуйста significa De nada.'
 }
 
 ];
@@ -466,13 +466,13 @@ function loadQuestion() {
     const q = questions[currentQuestion];
 
     document.getElementById('question-counter').textContent =
-        `Question ${currentQuestion + 1} of ${questions.length}`;
+        `Pergunta ${currentQuestion + 1} de ${questions.length}`;
 
     document.getElementById('score-counter').textContent =
-        `Score: ${score}`;
+        `Pontuação: ${score}`;
 
     document.getElementById('question-label').textContent =
-        `QUESTION ${String(currentQuestion + 1).padStart(2, '0')}`;
+        `PERGUNTA ${String(currentQuestion + 1).padStart(2, '0')}`;
 
     document.getElementById('question').textContent = q.question;
 
@@ -535,23 +535,23 @@ function selectAnswer(index) {
 
         score++;
 
-        feedback.textContent = '✓ Correct! ' + q.explanation;
+        feedback.textContent = '✓ Correto! ' + q.explanation;
 
     } else {
 
-        feedback.textContent = 'Not quite. ' + q.explanation;
+        feedback.textContent = 'Não é bem assim. ' + q.explanation;
 
     }
 
     document.getElementById('score-counter').textContent =
-        `Score: ${score}`;
+        `Pontuação: ${score}`;
 
     const nextButton = document.getElementById('next-button');
 
     nextButton.textContent =
         currentQuestion === questions.length - 1
-        ? 'See your results →'
-        : 'Next question →';
+        ? 'Ver resultados →'
+        : 'Próxima pergunta →';
 
     nextButton.style.display = 'inline-block';
 
@@ -582,7 +582,7 @@ function showResults() {
     document.getElementById('progress').style.width = '100%';
 
     document.getElementById('final-score').textContent =
-        `You scored ${score} out of ${questions.length}!`;
+        `Acertaste ${score} em ${questions.length} perguntas!`;
 
     let stars;
     let message;
@@ -590,17 +590,17 @@ function showResults() {
     if (score === 15) {
 
         stars = '★★★★★';
-        message = 'Excellent! You answered every question correctly. Your Russian A1 foundations are looking great!';
+        message = 'Excelente! Respondeste corretamente a todas as perguntas. Tens uma ótima base de russo A1!';
 
     } else if (score >= 8) {
 
         stars = '★★★☆☆';
-        message = 'Good work! You have a solid start. Keep practising your Russian vocabulary and grammar.';
+        message = 'Muito bem! Já tens algumas bases de russo. Continua a praticar o vocabulário e a gramática.';
 
     } else {
 
         stars = '★☆☆☆☆';
-        message = 'Keep going! Learning a new language takes practice. Review the basics and try again!';
+        message = 'Não desistas! Aprender uma língua nova exige prática. Revê os conteúdos básicos e tenta novamente!';
 
     }
 
