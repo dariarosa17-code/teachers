@@ -1,0 +1,631 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Russian A1 Quiz</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Times New Roman", Times, serif;
+    background: #f8f7f2;
+    color: #263449;
+    line-height: 1.6;
+    padding: 45px 8%;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.header {
+    margin-bottom: 35px;
+    border-bottom: 2px solid #a68b4e;
+    padding-bottom: 25px;
+}
+
+.small-heading {
+    color: #a68b4e;
+    font-size: 13px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+}
+
+h1 {
+    font-size: 36px;
+    font-weight: normal;
+    margin-bottom: 10px;
+}
+
+.intro {
+    color: #77766e;
+    font-size: 18px;
+}
+
+.progress-info {
+    display: flex;
+    justify-content: space-between;
+    color: #77766e;
+    font-size: 15px;
+    margin-bottom: 10px;
+}
+
+.progress-bar {
+    height: 5px;
+    background: #e5e2d8;
+    margin-bottom: 30px;
+}
+
+.progress-fill {
+    height: 5px;
+    width: 0%;
+    background: #65724e;
+    transition: width 0.3s;
+}
+
+.quiz-card {
+    background: #ffffff;
+    border: 1px solid #dedbd0;
+    border-top: 3px solid #a68b4e;
+    padding: 35px;
+}
+
+.question-number {
+    color: #a68b4e;
+    font-size: 13px;
+    letter-spacing: 2px;
+    margin-bottom: 18px;
+}
+
+.question {
+    font-size: 25px;
+    font-weight: normal;
+    margin-bottom: 12px;
+}
+
+.translation {
+    color: #77766e;
+    font-size: 16px;
+    margin-bottom: 28px;
+}
+
+.answers {
+    display: grid;
+    gap: 12px;
+}
+
+.answer {
+    background: #f8f7f2;
+    border: 1px solid #dedbd0;
+    padding: 15px 18px;
+    text-align: left;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 18px;
+    color: #263449;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.answer:hover:not(:disabled) {
+    border-color: #65724e;
+    background: #f0f0e9;
+}
+
+.answer:disabled {
+    cursor: default;
+}
+
+.answer.correct {
+    background: #e8eee3;
+    border-color: #65724e;
+    color: #405334;
+}
+
+.answer.incorrect {
+    background: #f4e9e5;
+    border-color: #a66b5e;
+    color: #874c40;
+}
+
+.feedback {
+    margin-top: 20px;
+    font-size: 17px;
+    min-height: 28px;
+    color: #526044;
+}
+
+.next-button {
+    display: none;
+    margin-top: 25px;
+    padding: 12px 25px;
+    background: #526044;
+    color: white;
+    border: none;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 17px;
+    cursor: pointer;
+}
+
+.next-button:hover {
+    background: #3d4a32;
+}
+
+.result {
+    display: none;
+    text-align: center;
+    background: white;
+    border: 1px solid #dedbd0;
+    border-top: 3px solid #a68b4e;
+    padding: 40px 25px;
+}
+
+.result h2 {
+    font-size: 30px;
+    font-weight: normal;
+    margin-bottom: 15px;
+}
+
+.stars {
+    color: #a68b4e;
+    font-size: 38px;
+    letter-spacing: 5px;
+    margin: 20px 0;
+}
+
+.score {
+    font-size: 22px;
+    margin-bottom: 15px;
+}
+
+.result-message {
+    color: #77766e;
+    font-size: 18px;
+    margin-bottom: 25px;
+}
+
+.restart-button {
+    background: #526044;
+    color: white;
+    border: none;
+    padding: 13px 28px;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 17px;
+    cursor: pointer;
+}
+
+.restart-button:hover {
+    background: #3d4a32;
+}
+
+.back-link {
+    display: inline-block;
+    margin-top: 30px;
+    color: #526044;
+    text-decoration: none;
+    border-bottom: 1px solid #a68b4e;
+    padding-bottom: 3px;
+    font-size: 16px;
+}
+
+footer {
+    text-align: center;
+    color: #77766e;
+    margin-top: 45px;
+    font-size: 14px;
+}
+
+@media (max-width: 600px) {
+    body {
+        padding: 30px 18px;
+    }
+
+    .quiz-card {
+        padding: 23px;
+    }
+
+    h1 {
+        font-size: 30px;
+    }
+
+    .question {
+        font-size: 22px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <header class="header">
+        <div class="small-heading">Russian · Beginner Level</div>
+
+        <h1>Russian A1 Quiz</h1>
+
+        <p class="intro">
+            Test your knowledge of basic Russian grammar,
+            vocabulary and everyday expressions.
+        </p>
+    </header>
+
+    <div id="quiz">
+
+        <div class="progress-info">
+            <span id="question-counter">Question 1 of 15</span>
+            <span id="score-counter">Score: 0</span>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress"></div>
+        </div>
+
+        <div class="quiz-card">
+
+            <div class="question-number" id="question-label">
+                QUESTION 01
+            </div>
+
+            <h2 class="question" id="question"></h2>
+
+            <p class="translation" id="translation"></p>
+
+            <div class="answers" id="answers"></div>
+
+            <div class="feedback" id="feedback"></div>
+
+            <button class="next-button" id="next-button"
+                onclick="nextQuestion()">
+                Next question →
+            </button>
+
+        </div>
+
+    </div>
+
+    <div class="result" id="result">
+
+        <div class="small-heading">Russian · A1</div>
+
+        <h2>Quiz completed!</h2>
+
+        <div class="stars" id="stars"></div>
+
+        <div class="score" id="final-score"></div>
+
+        <p class="result-message" id="result-message"></p>
+
+        <button class="restart-button" onclick="restartQuiz()">
+            Try again
+        </button>
+
+    </div>
+
+    <a class="back-link" href="/russo/quizzes/">
+        ← Back to Russian quizzes
+    </a>
+
+    <footer>
+        A Biblioteca da Professora Daria
+    </footer>
+
+</div>
+
+<script>
+
+const questions = [
+
+{
+    question: 'What does "Привет" mean?',
+    translation: 'Choose the correct translation.',
+    answers: ['Goodbye', 'Hello / Hi', 'Thank you'],
+    correct: 1,
+    explanation: 'Привет means Hello or Hi. It is an informal greeting.'
+},
+
+{
+    question: 'What does "Как тебя зовут?" mean?',
+    translation: 'Как тебя зовут?',
+    answers: [
+        'How old are you?',
+        'Where are you from?',
+        'What is your name?'
+    ],
+    correct: 2,
+    explanation: 'Как тебя зовут? means What is your name?'
+},
+
+{
+    question: 'Complete the sentence: Меня ___ Анна.',
+    translation: 'My name is Anna.',
+    answers: ['зовут', 'живёт', 'говорю'],
+    correct: 0,
+    explanation: 'Меня зовут Анна means My name is Anna.'
+},
+
+{
+    question: 'Choose the correct word: Это ___ книга.',
+    translation: 'This is my book.',
+    answers: ['мой', 'моя', 'моё'],
+    correct: 1,
+    explanation: 'Книга is feminine, so we use моя.'
+},
+
+{
+    question: 'Complete the sentence: Он ___ студент.',
+    translation: 'He is a student.',
+    answers: ['есть', 'быть', '—'],
+    correct: 2,
+    explanation: 'In the present tense, the verb быть (to be) is normally omitted in simple sentences.'
+},
+
+{
+    question: 'How do you say "I am from Portugal" in Russian?',
+    translation: 'Choose the correct sentence.',
+    answers: [
+        'Я из Португалии.',
+        'Я в Португалии.',
+        'Ты из Португалии.'
+    ],
+    correct: 0,
+    explanation: 'Я из Португалии means I am from Portugal.'
+},
+
+{
+    question: 'What number is "семь"?',
+    translation: 'Choose the correct number.',
+    answers: ['Five (5)', 'Seven (7)', 'Nine (9)'],
+    correct: 1,
+    explanation: 'Семь means seven.'
+},
+
+{
+    question: 'What does "Где?" mean?',
+    translation: 'Choose the correct translation.',
+    answers: ['When?', 'Who?', 'Where?'],
+    correct: 2,
+    explanation: 'Где? means Where?'
+},
+
+{
+    question: 'Complete the sentence: Я говорю ___-русски.',
+    translation: 'I speak Russian.',
+    answers: ['на', 'по', 'в'],
+    correct: 1,
+    explanation: 'The correct expression is говорить по-русски.'
+},
+
+{
+    question: 'Complete the sentence: У меня ___ брат.',
+    translation: 'I have a brother.',
+    answers: ['есть', 'быть', 'имею'],
+    correct: 0,
+    explanation: 'У меня есть брат is the standard beginner expression for I have a brother.'
+},
+
+{
+    question: 'What does "Кто это?" mean?',
+    translation: 'Choose the correct translation.',
+    answers: ['Who is this?', 'What is this?', 'Where is this?'],
+    correct: 0,
+    explanation: 'Кто это? means Who is this?'
+},
+
+{
+    question: 'What day is "понедельник"?',
+    translation: 'Choose the correct day.',
+    answers: ['Friday', 'Monday', 'Sunday'],
+    correct: 1,
+    explanation: 'Понедельник means Monday.'
+},
+
+{
+    question: 'Complete the sentence: Она живёт ___ Москве.',
+    translation: 'She lives in Moscow.',
+    answers: ['на', 'из', 'в'],
+    correct: 2,
+    explanation: 'We say жить в Москве (to live in Moscow).'
+},
+
+{
+    question: 'Complete the sentence: Я хочу ___ .',
+    translation: 'I want tea.',
+    answers: ['чай', 'чаям', 'чае'],
+    correct: 0,
+    explanation: 'Я хочу чай means I want tea. Чай is the correct form here.'
+},
+
+{
+    question: 'What is the correct response to "Спасибо"?',
+    translation: 'Someone says thank you. What do you reply?',
+    answers: ['Пожалуйста', 'До свидания', 'Доброе утро'],
+    correct: 0,
+    explanation: 'Пожалуйста means You are welcome.'
+}
+
+];
+
+let currentQuestion = 0;
+let score = 0;
+let answered = false;
+
+function loadQuestion() {
+
+    answered = false;
+
+    const q = questions[currentQuestion];
+
+    document.getElementById('question-counter').textContent =
+        `Question ${currentQuestion + 1} of ${questions.length}`;
+
+    document.getElementById('score-counter').textContent =
+        `Score: ${score}`;
+
+    document.getElementById('question-label').textContent =
+        `QUESTION ${String(currentQuestion + 1).padStart(2, '0')}`;
+
+    document.getElementById('question').textContent = q.question;
+
+    document.getElementById('translation').textContent = q.translation;
+
+    document.getElementById('progress').style.width =
+        (currentQuestion / questions.length * 100) + '%';
+
+    document.getElementById('feedback').textContent = '';
+
+    document.getElementById('next-button').style.display = 'none';
+
+    const answersContainer = document.getElementById('answers');
+
+    answersContainer.innerHTML = '';
+
+    q.answers.forEach((answer, index) => {
+
+        const button = document.createElement('button');
+
+        button.className = 'answer';
+
+        button.textContent = answer;
+
+        button.onclick = () => selectAnswer(index);
+
+        answersContainer.appendChild(button);
+
+    });
+
+}
+
+function selectAnswer(index) {
+
+    if (answered) return;
+
+    answered = true;
+
+    const q = questions[currentQuestion];
+
+    const buttons = document.querySelectorAll('.answer');
+
+    buttons.forEach((button, i) => {
+
+        button.disabled = true;
+
+        if (i === q.correct) {
+            button.classList.add('correct');
+        }
+
+        if (i === index && index !== q.correct) {
+            button.classList.add('incorrect');
+        }
+
+    });
+
+    const feedback = document.getElementById('feedback');
+
+    if (index === q.correct) {
+
+        score++;
+
+        feedback.textContent = '✓ Correct! ' + q.explanation;
+
+    } else {
+
+        feedback.textContent = 'Not quite. ' + q.explanation;
+
+    }
+
+    document.getElementById('score-counter').textContent =
+        `Score: ${score}`;
+
+    const nextButton = document.getElementById('next-button');
+
+    nextButton.textContent =
+        currentQuestion === questions.length - 1
+        ? 'See your results →'
+        : 'Next question →';
+
+    nextButton.style.display = 'inline-block';
+
+}
+
+function nextQuestion() {
+
+    currentQuestion++;
+
+    if (currentQuestion < questions.length) {
+
+        loadQuestion();
+
+    } else {
+
+        showResults();
+
+    }
+
+}
+
+function showResults() {
+
+    document.getElementById('quiz').style.display = 'none';
+
+    document.getElementById('result').style.display = 'block';
+
+    document.getElementById('progress').style.width = '100%';
+
+    document.getElementById('final-score').textContent =
+        `You scored ${score} out of ${questions.length}!`;
+
+    let stars;
+    let message;
+
+    if (score === 15) {
+
+        stars = '★★★★★';
+        message = 'Excellent! You answered every question correctly. Your Russian A1 foundations are looking great!';
+
+    } else if (score >= 8) {
+
+        stars = '★★★☆☆';
+        message = 'Good work! You have a solid start. Keep practising your Russian vocabulary and grammar.';
+
+    } else {
+
+        stars = '★☆☆☆☆';
+        message = 'Keep going! Learning a new language takes practice. Review the basics and try again!';
+
+    }
+
+    document.getElementById('stars').textContent = stars;
+
+    document.getElementById('result-message').textContent = message;
+
+}
+
+function restartQuiz() {
+
+    currentQuestion = 0;
+    score = 0;
+
+    document.getElementById('quiz').style.display = 'block';
+
+    document.getElementById('result').style.display = 'none';
+
+    loadQuestion();
+
+}
+
+loadQuestion();
+
+</script>
+
+</body>
+</html>
