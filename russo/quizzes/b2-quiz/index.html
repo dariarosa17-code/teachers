@@ -4,272 +4,254 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Quiz de Russo B2 | A Biblioteca da Professora Daria</title>
+<title>Quiz de Russo — B2 | A Biblioteca da Professora Daria</title>
 
 <style>
-* {
-    box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
     margin: 0;
     padding: 0;
-    font-family: "Times New Roman", serif;
+    font-family: "Times New Roman", Times, serif;
     background: #f8f7f2;
     color: #263449;
-    line-height: 1.6;
 }
 
 header {
-    background: #192c40;
-    color: #fff;
+    background: #263449;
+    color: #f8f7f2;
     text-align: center;
-    padding: 35px 20px;
-    border-bottom: 4px solid #a68b4e;
+    padding: 28px 20px;
 }
 
 header h1 {
     margin: 0;
-    font-size: 30px;
+    font-size: 29px;
     font-weight: normal;
 }
 
 header p {
     margin: 8px 0 0;
-    color: #e4dfd2;
     font-size: 16px;
+    color: #e6dfcf;
 }
 
-main {
-    max-width: 820px;
-    margin: 40px auto;
+.container {
+    max-width: 850px;
+    margin: 35px auto;
     padding: 0 20px;
+}
+
+.card {
+    background: white;
+    border: 1px solid #e4e0d5;
+    border-radius: 8px;
+    padding: 30px;
+    box-shadow: 0 3px 12px rgba(38,52,73,0.05);
+}
+
+.intro {
+    text-align: center;
+}
+
+.intro h2 {
+    font-size: 25px;
+    font-weight: normal;
+    margin-top: 0;
+}
+
+.intro p {
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+button {
+    font-family: "Times New Roman", Times, serif;
+    cursor: pointer;
+    font-size: 17px;
+}
+
+.primary {
+    background: #263449;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 12px 28px;
+    margin-top: 20px;
+}
+
+.primary:hover {
+    background: #526044;
+}
+
+.progress-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 15px;
+    margin-bottom: 9px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background: #e9e6dd;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 28px;
+}
+
+.progress {
+    height: 100%;
+    width: 0;
+    background: #a68b4e;
+    transition: width 0.3s;
+}
+
+.section-label {
+    color: #8a7544;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 13px;
+    margin-bottom: 12px;
+}
+
+.question {
+    font-size: 23px;
+    line-height: 1.45;
+    margin: 0 0 22px;
+}
+
+.passage {
+    background: #f8f7f2;
+    border-left: 3px solid #a68b4e;
+    padding: 17px 20px;
+    margin: 18px 0 24px;
+    font-size: 18px;
+    line-height: 1.65;
+    white-space: pre-line;
+}
+
+.option {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 14px 17px;
+    margin: 10px 0;
+    background: #fff;
+    border: 1px solid #dcd8ce;
+    border-radius: 5px;
+    color: #263449;
+    line-height: 1.45;
+    transition: background 0.2s, border 0.2s;
+}
+
+.option:hover:not(:disabled) {
+    border-color: #a68b4e;
+    background: #faf9f5;
+}
+
+.option:disabled {
+    cursor: default;
+    opacity: 1;
+}
+
+.option.correct {
+    background: #edf3e9;
+    border-color: #526044;
+}
+
+.option.incorrect {
+    background: #f7eeee;
+    border-color: #a65b55;
+}
+
+.feedback {
+    display: none;
+    padding: 15px 17px;
+    margin-top: 20px;
+    border-radius: 5px;
+    font-size: 17px;
+    line-height: 1.5;
+}
+
+.feedback.good {
+    display: block;
+    background: #edf3e9;
+    border-left: 3px solid #526044;
+}
+
+.feedback.bad {
+    display: block;
+    background: #f7eeee;
+    border-left: 3px solid #a65b55;
+}
+
+.next-area {
+    text-align: right;
+    margin-top: 20px;
+}
+
+.result {
+    text-align: center;
+}
+
+.result h2 {
+    font-size: 27px;
+    font-weight: normal;
+}
+
+.stars {
+    font-size: 43px;
+    color: #a68b4e;
+    letter-spacing: 5px;
+    margin: 15px 0;
+}
+
+.score {
+    font-size: 22px;
+    margin: 15px 0;
+}
+
+.category-results {
+    text-align: left;
+    margin: 25px 0;
+    border-top: 1px solid #e4e0d5;
+}
+
+.category-results p {
+    padding: 10px 0;
+    border-bottom: 1px solid #e4e0d5;
+    font-size: 17px;
+    margin: 0;
 }
 
 .back-link {
     display: inline-block;
-    margin-bottom: 25px;
+    margin-top: 25px;
     color: #526044;
     text-decoration: none;
+    font-size: 17px;
 }
 
 .back-link:hover {
     text-decoration: underline;
 }
 
-.quiz-card {
-    background: #fff;
-    padding: 35px;
-    border: 1px solid #e5e1d7;
-    border-radius: 4px;
-    box-shadow: 0 4px 14px rgba(0,0,0,0.04);
-}
-
-.level {
-    color: #a68b4e;
-    letter-spacing: 2px;
-    font-size: 13px;
-    text-transform: uppercase;
-    margin-bottom: 10px;
-}
-
-.quiz-title {
-    font-size: 27px;
-    font-weight: normal;
-    margin: 0 0 10px;
-}
-
-.description {
-    color: #6c7280;
-    margin-bottom: 25px;
-}
-
-.section-label {
-    display: inline-block;
-    color: #526044;
-    background: #edf0e8;
-    padding: 5px 12px;
-    font-size: 14px;
-    margin-bottom: 15px;
-}
-
-.progress-info {
-    display: flex;
-    justify-content: space-between;
-    font-size: 14px;
-    color: #6c7280;
-    margin-bottom: 8px;
-}
-
-.progress-bar {
-    height: 7px;
-    background: #e9e6dd;
-    border-radius: 10px;
-    overflow: hidden;
-    margin-bottom: 25px;
-}
-
-.progress {
-    height: 100%;
-    width: 0%;
-    background: #a68b4e;
-    transition: width 0.3s ease;
-}
-
-.question {
-    font-size: 21px;
-    margin: 20px 0;
-    line-height: 1.5;
-}
-
-.question-text {
-    background: #f8f7f2;
-    border-left: 3px solid #a68b4e;
-    padding: 18px 20px;
-    margin: 20px 0;
-    font-size: 18px;
-    line-height: 1.8;
-    white-space: pre-line;
-    overflow-wrap: anywhere;
-}
-
-.question-text .translation {
-    display: block;
-    color: #77766e;
-    font-size: 14px;
-    margin-top: 12px;
-    font-style: italic;
-}
-
-.text-instruction {
-    color: #77766e;
-    font-size: 15px;
-    margin: 12px 0;
-}
-
-.options {
-    display: grid;
-    gap: 12px;
-}
-
-.option {
-    background: #f8f7f2;
-    border: 1px solid #dedbd1;
-    padding: 14px 16px;
-    text-align: left;
-    font-family: "Times New Roman", serif;
-    font-size: 16px;
-    color: #263449;
-    cursor: pointer;
-    border-radius: 3px;
-    transition: 0.2s;
-    line-height: 1.6;
-}
-
-.option:hover:not(:disabled) {
-    border-color: #a68b4e;
-    background: #f2efe6;
-}
-
-.option:disabled {
-    cursor: default;
-}
-
-.option.correct {
-    background: #edf2e9;
-    border-color: #71845f;
-}
-
-.option.incorrect {
-    background: #f6ece8;
-    border-color: #b77b6c;
-}
-
-.feedback {
-    margin-top: 20px;
-    padding: 13px 15px;
-    display: none;
-    background: #f8f7f2;
-    border-left: 3px solid #a68b4e;
-}
-
-.next-btn, .restart-btn {
-    display: none;
-    margin-top: 25px;
-    background: #192c40;
-    color: white;
-    border: none;
-    padding: 12px 25px;
-    font-family: "Times New Roman", serif;
-    font-size: 17px;
-    cursor: pointer;
-}
-
-.next-btn:hover, .restart-btn:hover {
-    background: #30465e;
-}
-
-.result {
-    display: none;
-    text-align: center;
-}
-
-.stars {
-    color: #a68b4e;
-    font-size: 35px;
-    letter-spacing: 5px;
-    margin: 20px 0;
-}
-
-.result h2 {
-    font-size: 28px;
-    font-weight: normal;
-}
-
-.result p {
-    font-size: 18px;
-}
-
-.result-details {
-    text-align: left;
-    margin-top: 30px;
-    padding: 20px;
-    background: #f8f7f2;
-}
-
-.result-details p {
-    font-size: 16px;
-    margin: 8px 0;
-}
-
 footer {
-    background: #192c40;
-    color: #e4dfd2;
+    background: #263449;
+    color: #e6dfcf;
     text-align: center;
-    padding: 20px;
-    margin-top: 60px;
-    border-top: 3px solid #a68b4e;
+    padding: 18px;
+    margin-top: 50px;
     font-size: 14px;
 }
+
+.hidden { display: none; }
 
 @media (max-width: 600px) {
-    .quiz-card {
-        padding: 23px;
-    }
-
-    header h1 {
-        font-size: 25px;
-    }
-
-    .question {
-        font-size: 19px;
-    }
-
-    .question-text {
-        padding: 14px;
-        font-size: 16px;
-    }
+    .card { padding: 21px; }
+    .question { font-size: 21px; }
+    header h1 { font-size: 25px; }
 }
 </style>
 </head>
@@ -278,493 +260,501 @@ footer {
 
 <header>
     <h1>A Biblioteca da Professora Daria</h1>
-    <p>Aprender russo passo a passo</p>
+    <p>Russo · Nível B2</p>
 </header>
 
-<main>
+<div class="container">
 
-<a class="back-link" href="/russo/quizzes/">← Voltar aos quizzes</a>
-
-<div class="quiz-card">
-
-    <div id="quizArea">
-
-        <div class="level">Russo · Nível B2</div>
-
-        <h2 class="quiz-title">Quiz de conhecimentos</h2>
-
-        <p class="description">
-            30 perguntas para testar a tua capacidade de utilizar,
-            compreender e interpretar o russo a um nível avançado.
+    <div class="card intro" id="intro">
+        <h2>Quiz de Russo — B2</h2>
+        <p>
+            Este questionário testa os teus conhecimentos de russo
+            de nível B2 através de 30 perguntas.
         </p>
+        <p>
+            Vais encontrar exercícios de gramática, vocabulário,
+            interpretação de textos e raciocínio lógico.
+        </p>
+        <p>
+            Lê cada pergunta com atenção e escolhe apenas uma resposta.
+            No final, receberás a tua pontuação e uma classificação.
+        </p>
+        <button class="primary" onclick="startQuiz()">Começar o quiz</button>
+        <br>
+        <a class="back-link" href="/russo/quizzes/">← Voltar aos quizzes de russo</a>
+    </div>
 
+    <div class="card hidden" id="quiz">
         <div class="progress-info">
             <span id="questionNumber">Pergunta 1 de 30</span>
-            <span id="score">Pontuação: 0</span>
+            <span id="scoreDisplay">Pontuação: 0</span>
         </div>
 
         <div class="progress-bar">
             <div class="progress" id="progress"></div>
         </div>
 
-        <div class="section-label" id="sectionLabel">
-            Parte 1 · Gramática e expressão
+        <div class="section-label" id="sectionLabel"></div>
+        <h2 class="question" id="questionText"></h2>
+
+        <div id="passageContainer" class="hidden">
+            <div class="passage" id="passageText"></div>
         </div>
 
-        <div class="question" id="question"></div>
+        <div id="options"></div>
 
-        <div class="question-text" id="questionText"
-             style="display:none"></div>
+        <div id="feedback" class="feedback"></div>
 
-        <p class="text-instruction" id="textInstruction"
-           style="display:none"></p>
-
-        <div class="options" id="options"></div>
-
-        <div class="feedback" id="feedback"></div>
-
-        <button class="next-btn" id="nextBtn"
-                onclick="nextQuestion()">
-            Próxima pergunta →
-        </button>
-
+        <div class="next-area">
+            <button class="primary hidden" id="nextButton" onclick="nextQuestion()">
+                Próxima pergunta →
+            </button>
+        </div>
     </div>
 
-    <div class="result" id="result">
-
-        <div class="level">Quiz concluído</div>
-
-        <h2>Parabéns por teres chegado ao fim!</h2>
-
+    <div class="card result hidden" id="result">
+        <h2>Questionário concluído!</h2>
         <div class="stars" id="stars"></div>
-
-        <p id="finalScore"></p>
-
+        <div class="score" id="finalScore"></div>
         <p id="resultMessage"></p>
 
-        <div class="result-details">
-            <h3 style="font-weight:normal">Resultados por categoria</h3>
-            <p id="grammarResult"></p>
-            <p id="vocabularyResult"></p>
-            <p id="logicResult"></p>
-        </div>
+        <div class="category-results" id="categoryResults"></div>
 
-        <button class="restart-btn"
-                style="display:inline-block"
-                onclick="restartQuiz()">
-            Repetir o quiz
-        </button>
-
+        <button class="primary" onclick="restartQuiz()">Repetir o quiz</button>
+        <br>
+        <a class="back-link" href="/russo/quizzes/">← Voltar aos quizzes de russo</a>
     </div>
 
 </div>
-</main>
 
 <footer>
-    A Biblioteca da Professora Daria · Aprender com curiosidade
+    A Biblioteca da Professora Daria · Aprender russo passo a passo
 </footer>
 
 <script>
-
 const questions = [
 
-/* ==========================================
-   PARTE 1 — GRAMÁTICA E EXPRESSÃO
-   PERGUNTAS 1–10
-========================================== */
+/* SECÇÃO 1 — GRAMÁTICA E EXPRESSÃO */
 
 {
-    section: "Parte 1 · Gramática e expressão",
-    question: "Выбери наиболее подходящий вариант: Он говорил так убедительно, что у меня не осталось никаких сомнений. Его аргументы были ___ убедительны.",
+    section: "Gramática e expressão",
+    question: "Выбери правильный вариант: «Если бы я знал об этом раньше, я ... тебе».",
     options: [
-        "несомненно",
-        "вряд ли",
-        "как будто"
-    ],
-    answer: 0,
-    explanation: "«Несомненно» expressa um elevado grau de certeza. É adequado para reforçar a avaliação positiva dos argumentos."
-},
-
-{
-    section: "Parte 1 · Gramática e expressão",
-    question: "Выбери правильный вариант: Если бы я знал о твоём приезде, я обязательно ___ тебя в аэропорту.",
-    options: [
-        "встречу",
-        "встретил бы",
-        "встречал"
+        "помогу",
+        "помог бы",
+        "помогал",
+        "помог"
     ],
     answer: 1,
-    explanation: "A estrutura «если бы» com uma situação hipotética no passado exige o passado do verbo acompanhado de «бы»: «встретил бы»."
+    explanation: "A construção «если бы» com o passado e «бы» exprime uma situação hipotética: «teria ajudado»."
 },
 
 {
-    section: "Parte 1 · Gramática e expressão",
-    question: "Выбери правильный вариант: Он отрицал, что ___ об этом заранее.",
+    section: "Gramática e expressão",
+    question: "Какое предложение выражает наибольшую уверенность?",
     options: [
-        "знал",
-        "узнает",
-        "узнал бы"
-    ],
-    answer: 0,
-    explanation: "«Отрицал, что знал» significa que negava ter conhecimento prévio. O imperfeito «знал» descreve um estado de conhecimento no passado."
-},
-
-{
-    section: "Parte 1 · Gramática e expressão",
-    question: "Выбери наиболее подходящий вариант: ___, этот проект требует гораздо больше времени, чем мы предполагали.",
-    options: [
-        "По всей вероятности",
-        "Само собой разумеется",
-        "Ни в коем случае"
-    ],
-    answer: 0,
-    explanation: "«По всей вероятности» significa muito provavelmente. Expressa uma conclusão provável, mas não totalmente certa."
-},
-
-{
-    section: "Parte 1 · Gramática e expressão",
-    question: "Выбери правильный вариант: Она настояла на том, чтобы все участники ___ свои предложения до пятницы.",
-    options: [
-        "представили",
-        "представляют",
-        "представят"
-    ],
-    answer: 0,
-    explanation: "Depois de «настоять на том, чтобы» usamos uma construção com o passado do verbo e a partícula «бы», que neste caso fica implícita na estrutura: «чтобы представили»."
-},
-
-{
-    section: "Parte 1 · Gramática e expressão",
-    question: "Выбери наиболее подходящий вариант: Он, ___, не мог знать о случившемся, поскольку в тот момент находился за границей.",
-    options: [
-        "очевидно",
-        "к счастью",
-        "наоборот"
-    ],
-    answer: 0,
-    explanation: "«Очевидно» introduz uma conclusão baseada nas informações disponíveis: aparentemente, ele não podia saber o que tinha acontecido."
-},
-
-{
-    section: "Parte 1 · Gramática e expressão",
-    question: "Выбери правильный вариант: Несмотря на то что решение было принято поспешно, оно оказалось ___ правильным.",
-    options: [
-        "вполне",
-        "никак",
-        "едва ли"
-    ],
-    answer: 0,
-    explanation: "«Вполне правильным» significa perfeitamente correto ou bastante correto. É uma combinação natural neste contexto."
-},
-
-{
-    section: "Parte 1 · Gramática e expressão",
-    question: "Выбери наиболее подходящий вариант: Он не только отказался от помощи, ___ ещё и обвинил нас в бездействии.",
-    options: [
-        "а",
-        "но",
-        "однако"
-    ],
-    answer: 1,
-    explanation: "A construção correlativa «не только..., но и...» significa não só..., mas também...."
-},
-
-{
-    section: "Parte 1 · Gramática e expressão",
-    question: "Выбери правильный вариант: Я сомневаюсь в том, что он ___ принять такое ответственное решение самостоятельно.",
-    options: [
-        "способен",
-        "способным",
-        "способность"
-    ],
-    answer: 0,
-    explanation: "«Способен принять решение» significa é capaz de tomar uma decisão. A forma curta do adjetivo «способен» é usada nesta construção."
-},
-
-{
-    section: "Parte 1 · Gramática e expressão",
-    question: "Выбери наиболее подходящий вариант: ___, он не совсем понял, что именно от него требовалось.",
-    options: [
-        "Судя по всему",
-        "Без всякого сомнения",
-        "Что и говорить"
-    ],
-    answer: 0,
-    explanation: "«Судя по всему» significa a julgar por tudo / aparentemente. Introduz uma conclusão baseada no contexto, sem afirmar certeza absoluta."
-},
-
-/* ==========================================
-   PARTE 2 — VOCABULÁRIO E INTERPRETAÇÃO
-   PERGUNTAS 11–20
-========================================== */
-
-{
-    section: "Parte 2 · Vocabulário e interpretação",
-    question: "Выбери выражение, которое лучше всего передаёт полную уверенность в сказанном.",
-    options: [
-        "Вряд ли это произойдёт.",
-        "Можно не сомневаться, что это произойдёт.",
-        "Не исключено, что это произойдёт."
-    ],
-    answer: 1,
-    explanation: "«Можно не сомневаться, что...» transmite uma convicção muito forte. As outras expressões indicam dúvida ou possibilidade."
-},
-
-{
-    section: "Parte 2 · Vocabulário e interpretação",
-    question: "Твой коллега помог тебе закончить сложный проект. Как лучше выразить искреннюю благодарность?",
-    options: [
-        "Мне совершенно всё равно.",
-        "Я очень признателен тебе за помощь.",
-        "Не думаю, что это имело значение."
-    ],
-    answer: 1,
-    explanation: "«Я очень признателен тебе за помощь» é uma forma natural e relativamente formal de expressar gratidão."
-},
-
-{
-    section: "Parte 2 · Vocabulário e interpretação",
-    question: "Выбери выражение, которое означает «não é de excluir que» или «é possível que».",
-    options: [
-        "Нельзя не согласиться",
-        "Не исключено, что",
-        "Само собой разумеется"
-    ],
-    answer: 1,
-    explanation: "«Не исключено, что» expressa uma possibilidade. Não significa que algo seja certo, apenas que pode acontecer."
-},
-
-{
-    section: "Parte 2 · Vocabulário e interpretação",
-    question: "Тебе сообщили, что твой друг получил долгожданную работу. Как лучше отреагировать?",
-    options: [
-        "Вот это да! Поздравляю, ты этого заслужил!",
-        "Ничего подобного, это невозможно.",
-        "Едва ли это хорошая новость."
-    ],
-    answer: 0,
-    explanation: "«Вот это да!» expressa surpresa positiva. «Поздравляю, ты этого заслужил!» é uma reação adequada a uma boa notícia."
-},
-
-{
-    section: "Parte 2 · Vocabulário e interpretação",
-    question: "Какое выражение лучше всего подходит для уточнения источника информации?",
-    options: [
-        "По словам очевидцев",
-        "Само собой",
-        "К огромному сожалению"
-    ],
-    answer: 0,
-    explanation: "«По словам очевидцев» significa segundo as testemunhas. É uma expressão de autorização: identifica a origem da informação."
-},
-
-{
-    section: "Parte 2 · Vocabulário e interpretação",
-    question: "Прочитай текст и выбери правильный вывод.",
-    text: "В последнее время всё больше компаний позволяют своим сотрудникам работать удалённо. С одной стороны, это помогает экономить время на дорогу и самостоятельно планировать рабочий день. С другой стороны, отсутствие личного общения иногда затрудняет обмен идеями. Некоторые специалисты отмечают, что удалённая работа требует особой самодисциплины. Таким образом, её эффективность во многом зависит от характера работы и личных особенностей сотрудника.",
-    questionAfterText: "Какова основная мысль текста?",
-    options: [
-        "Удалённая работа подходит абсолютно всем.",
-        "Удалённая работа имеет преимущества и недостатки, а её эффективность зависит от разных факторов.",
-        "Все компании должны отказаться от офисов."
-    ],
-    answer: 1,
-    explanation: "O texto apresenta vantagens e desvantagens do trabalho remoto e conclui que a sua eficácia depende do tipo de trabalho e das características individuais."
-},
-
-{
-    section: "Parte 2 · Vocabulário e interpretação",
-    question: "Выбери наиболее подходящий синоним выражения «принимать во внимание».",
-    options: [
-        "Учитывать",
-        "Отказываться",
-        "Подражать"
-    ],
-    answer: 0,
-    explanation: "«Учитывать» significa ter em consideração ou tomar algo em conta."
-},
-
-{
-    section: "Parte 2 · Vocabulário e interpretação",
-    question: "Прочитай текст. Выбери вариант, который правильно исправляет все пять ошибок.",
-    text: "Безусловно, многие люди считает, что работа из дома имеет свои преимущества.\nОднако, она не всегда подходит каждому сотруднику.\nСотрудникам бывает трудно сосредоточиться, потому что дома часто отвлекают разными делами.\nКроме того, не все работники умеет самостоятельно организовать своё время.\nНа самом деле, личное общение с коллегами помогают быстрее решать сложные вопросы.\nПоэтому, можно сказать, что удалённая работа требует дисциплины.\nНесомненно, она также предполагает умение эффективно общаться.",
-    questionAfterText: "Qual das opções apresenta as cinco correções necessárias?",
-    options: [
-        "считает → считают; Однако, → Однако; разными делами → разные дела; умеет → умеют; помогают → помогает; Поэтому, → Поэтому",
-        "считает → считаем; Однако, → Однако; разными делами → разных дел; умеет → умеют; помогают → помогают; Поэтому, → Поэтому",
-        "считает → считают; Однако, → Однако; разными делами → разные дела; умеет → умеют; помогают → помогает; Поэтому, → Поэтому",
-        "считает → считает; Однако, → Однако; разными делами → разные дела; умеет → умеют; помогают → помогает; Поэтому, → Поэтому"
+        "Возможно, он уже приехал.",
+        "Кажется, он уже приехал.",
+        "Несомненно, он уже приехал.",
+        "Может быть, он уже приехал."
     ],
     answer: 2,
-    explanation: "As cinco correções gramaticais são: «люди считают» (concordância no plural); «Однако она» (não se coloca vírgula depois da conjunção); «отвлекают разные дела» (sujeito no nominativo); «работники умеют» (plural); «общение помогает» (sujeito singular). Além disso, não se coloca vírgula depois de «Поэтому» nesta frase. A opção correta apresenta todas as correções."
+    explanation: "«Несомненно» transmite um grau muito elevado de certeza."
 },
 
 {
-    section: "Parte 2 · Vocabulário e interpretação",
-    question: "Какое выражение лучше всего подходит, если ты хочешь мягко выразить несогласие с собеседником?",
+    section: "Gramática e expressão",
+    question: "Выбери правильный вариант: «Он отрицал, что ... об этом заранее».",
     options: [
-        "Позвольте с вами не согласиться.",
-        "Вы совершенно ничего не понимаете.",
-        "Это абсолютная чепуха."
+        "знал",
+        "знает бы",
+        "узнает",
+        "знать"
     ],
     answer: 0,
-    explanation: "«Позвольте с вами не согласиться» é uma forma educada e diplomática de manifestar discordância."
+    explanation: "«Отрицать, что...» é seguido por uma oração subordinada com o verbo conjugado. Neste contexto, usa-se o passado «знал»."
 },
 
 {
-    section: "Parte 2 · Vocabulário e interpretação",
-    question: "Выбери подходящее продолжение: Он долго сомневался, но в конце концов ___ решение.",
+    section: "Gramática e expressão",
+    question: "Какое выражение указывает на высокую степень вероятности?",
     options: [
-        "принял",
-        "сделал",
-        "поставил"
-    ],
-    answer: 0,
-    explanation: "Em russo dizemos «принять решение» (tomar uma decisão). É uma combinação lexical fixa."
-},
-
-/* ==========================================
-   PARTE 3 — COMPREENSÃO E DEDUÇÃO LÓGICA
-   PERGUNTAS 21–30
-========================================== */
-
-{
-    section: "Parte 3 · Compreensão e dedução lógica",
-    question: "Все сотрудники, которые успешно прошли собеседование, получили приглашение на второй этап. Марина получила такое приглашение. Что можно заключить?",
-    options: [
-        "Марина успешно прошла собеседование.",
-        "Марина уже получила работу.",
-        "Марина отказалась от приглашения."
-    ],
-    answer: 0,
-    explanation: "O enunciado estabelece que todos os candidatos que passaram na entrevista receberam um convite para a segunda fase. Podemos concluir que Marina passou na entrevista, mas não que já conseguiu o emprego."
-},
-
-{
-    section: "Parte 3 · Compreensão e dedução lógica",
-    question: "Ни один из участников конференции не опоздал. Алексей участвовал в конференции. Что следует из этой информации?",
-    options: [
-        "Алексей опоздал.",
-        "Алексей пришёл вовремя.",
-        "Алексей не участвовал в конференции."
+        "Вряд ли",
+        "По всей вероятности",
+        "Едва ли",
+        "Сомневаюсь"
     ],
     answer: 1,
-    explanation: "Se nenhum participante chegou atrasado e Alexey participou, então Alexey chegou a horas."
+    explanation: "«По всей вероятности» significa «muito provavelmente»."
 },
 
 {
-    section: "Parte 3 · Compreensão e dedução lógica",
-    question: "Если температура опускается ниже нуля, вода замерзает. Сегодня вода в озере замёрзла. Какой вывод можно сделать?",
+    section: "Gramática e expressão",
+    question: "Выбери правильное продолжение: «Она настояла на том, чтобы все участники ... свои предложения».",
+    options: [
+        "представляют",
+        "представили",
+        "представят",
+        "представлять"
+    ],
+    answer: 1,
+    explanation: "Depois de «настоять на том, чтобы» usa-se normalmente o passado do verbo na oração subordinada."
+},
+
+{
+    section: "Gramática e expressão",
+    question: "Какое слово лучше всего выражает очевидность факта?",
+    options: [
+        "Едва ли",
+        "Случайно",
+        "Очевидно",
+        "Возможно"
+    ],
+    answer: 2,
+    explanation: "«Очевидно» indica que algo parece claro ou evidente."
+},
+
+{
+    section: "Gramática e expressão",
+    question: "Выбери правильный вариант: «Я считаю это решение ...».",
+    options: [
+        "вполне правильным",
+        "вполне правильно",
+        "вполне правильное",
+        "вполне правильности"
+    ],
+    answer: 0,
+    explanation: "Depois de «считать что-либо» usa-se o instrumental: «считать решение правильным»."
+},
+
+{
+    section: "Gramática e expressão",
+    question: "Выбери правильный вариант: «Он не только отказался от предложения, но и ... организаторов».",
+    options: [
+        "обвинял",
+        "обвинил",
+        "обвинение",
+        "обвинённый"
+    ],
+    answer: 1,
+    explanation: "A estrutura «не только..., но и...» coordena duas ações. «Обвинил» é a forma verbal adequada."
+},
+
+{
+    section: "Gramática e expressão",
+    question: "Какое предложение выражает сомнение?",
+    options: [
+        "Я совершенно уверен, что он прав.",
+        "Безусловно, это хорошая идея.",
+        "Я сомневаюсь в том, что он способен принять такое решение.",
+        "Несомненно, результат будет положительным."
+    ],
+    answer: 2,
+    explanation: "A expressão «я сомневаюсь в том, что...» indica explicitamente dúvida."
+},
+
+{
+    section: "Gramática e expressão",
+    question: "Выбери правильное продолжение: «Несмотря на то что погода была плохой, ...».",
+    options: [
+        "мы всё-таки отправились в путь",
+        "потому что мы остались дома",
+        "если бы погода была лучше",
+        "из-за того что мы не поехали"
+    ],
+    answer: 0,
+    explanation: "«Несмотря на то что» introduz uma concessão: apesar das condições, a ação aconteceu."
+},
+
+/* SECÇÃO 2 — VOCABULÁRIO E INTERPRETAÇÃO */
+
+{
+    section: "Vocabulário e interpretação",
+    question: "Что означает выражение «принимать что-либо как должное»?",
+    options: [
+        "Считать что-либо обычным и не ценить это.",
+        "Отказываться от чего-либо.",
+        "Сомневаться в каждом решении.",
+        "Считать что-либо невозможным."
+    ],
+    answer: 0,
+    explanation: "«Принимать как должное» significa considerar algo garantido ou normal, sem lhe dar o devido valor."
+},
+
+{
+    section: "Vocabulário e interpretação",
+    question: "Выбери синоним слова «убедительный».",
+    options: [
+        "Сомнительный",
+        "Доказательный",
+        "Случайный",
+        "Поверхностный"
+    ],
+    answer: 1,
+    explanation: "«Доказательный» aproxima-se de «убедительный»: algo fundamentado e convincente."
+},
+
+{
+    section: "Vocabulário e interpretação",
+    question: "Что означает выражение «вопреки ожиданиям»?",
+    options: [
+        "В соответствии с ожиданиями",
+        "До появления ожиданий",
+        "Несмотря на то, чего ожидали",
+        "Благодаря ожиданиям"
+    ],
+    answer: 2,
+    explanation: "«Вопреки ожиданиям» significa «contrariamente ao que se esperava»."
+},
+
+{
+    section: "Vocabulário e interpretação",
+    question: "Как лучше всего понять выражение «дело обстоит иначе»?",
+    options: [
+        "Ситуация совершенно другая.",
+        "Дело уже закончено.",
+        "Никто не знает о деле.",
+        "Ситуация не имеет значения."
+    ],
+    answer: 0,
+    explanation: "A expressão indica que a situação é diferente daquela que foi mencionada ou imaginada."
+},
+
+{
+    section: "Vocabulário e interpretação",
+    question: "Что означает слово «предвзятый»?",
+    options: [
+        "Объективный и беспристрастный",
+        "Основанный на заранее сложившемся мнении",
+        "Неожиданный и случайный",
+        "Точный и доказанный"
+    ],
+    answer: 1,
+    explanation: "«Предвзятый» descreve uma opinião ou atitude influenciada por preconceitos ou ideias prévias."
+},
+
+{
+    section: "Vocabulário e interpretação",
+    question: "Выбери наиболее подходящее слово: «Его объяснение показалось мне совершенно ...».",
+    options: [
+        "убедительным",
+        "убеждением",
+        "убеждать",
+        "убеждённость"
+    ],
+    answer: 0,
+    explanation: "«Убедительным» é o instrumental de «убедительный», adequado depois de «показалось мне»."
+},
+
+{
+    section: "Vocabulário e interpretação",
+    question: "Что означает выражение «не вызывает сомнений»?",
+    options: [
+        "С этим трудно согласиться.",
+        "Это совершенно неясно.",
+        "Это не подвергается сомнению.",
+        "Это кажется маловероятным."
+    ],
+    answer: 2,
+    explanation: "A expressão indica que algo é considerado certo ou indiscutível."
+},
+
+{
+    section: "Vocabulário e interpretação",
+    question: "Прочитай текст и выбери его основную мысль.",
+    passage: "Современные технологии значительно упростили повседневную жизнь. Мы можем быстро получать информацию, общаться с людьми на расстоянии и выполнять многие задачи за несколько минут. Однако постоянное использование цифровых устройств иногда мешает сосредоточиться и уделять внимание окружающим. Поэтому важно не только пользоваться преимуществами технологий, но и осознавать их возможные недостатки.",
+    options: [
+        "Современные технологии приносят только вред.",
+        "Технологии полезны, но важно пользоваться ими разумно.",
+        "Люди должны полностью отказаться от цифровых устройств.",
+        "Общение на расстоянии невозможно без современных технологий."
+    ],
+    answer: 1,
+    explanation: "O texto apresenta vantagens e desvantagens e defende uma utilização equilibrada da tecnologia."
+},
+
+{
+    section: "Vocabulário e interpretação",
+    question: "Выбери вариант, в котором все пять ошибок в тексте исправлены правильно.",
+    passage: "Многие человек считают, что современная жизнь становится всё более сложной. Однако, люди часто сталкиваются с проблемами, которые отвлекают их от важные дела. Некоторые работники не умеет правильно распределять своё время. В результате у них не хватает времени на общение с близкими, которое помогают человеку чувствовать себя лучше.",
+    options: [
+        "Многие люди считают, что современная жизнь становится всё более сложной. Однако люди часто сталкиваются с проблемами, которые отвлекают их от важных дел. Некоторые работники не умеют правильно распределять своё время. В результате у них не хватает времени на общение с близкими, которое помогает человеку чувствовать себя лучше.",
+        "Многие люди считает, что современная жизнь становится всё более сложной. Однако люди часто сталкиваются с проблемами, которые отвлекают их от важные дела. Некоторые работники не умеют правильно распределять своё время. В результате у них не хватает времени на общение с близкими, которое помогают человеку чувствовать себя лучше.",
+        "Многие человек считают, что современная жизнь становится всё более сложной. Однако люди часто сталкиваются с проблемами, которые отвлекают их от важных дел. Некоторые работники не умеет правильно распределять своё время. В результате у них не хватает времени на общение с близкими, которое помогает человеку чувствовать себя лучше.",
+        "Многие люди считают, что современная жизнь становится всё более сложной. Однако люди часто сталкиваются с проблемами, которые отвлекают их от важных дел. Некоторые работники не умеют правильно распределять своё время. В результате у них не хватает времени на общение с близкими, которые помогают человеку чувствовать себя лучше."
+    ],
+    answer: 0,
+    explanation: "As cinco correções são: «многие люди», retirar a vírgula depois de «однако», «от важных дел», «работники не умеют» e «общение..., которое помогает». Só a primeira opção corrige os cinco erros."
+},
+
+{
+    section: "Vocabulário e interpretação",
+    question: "Что означает выражение «с одной стороны..., с другой стороны...»?",
+    options: [
+        "Противопоставление двух точек зрения",
+        "Последовательность событий",
+        "Причину и следствие",
+        "Полное согласие с одной позицией"
+    ],
+    answer: 0,
+    explanation: "A expressão apresenta duas perspetivas ou aspetos diferentes de uma questão."
+},
+
+/* SECÇÃO 3 — COMPREENSÃO E RACIOCÍNIO LÓGICO */
+
+{
+    section: "Compreensão e raciocínio lógico",
+    question: "Все сотрудники, успешно прошедшие собеседование, получили приглашение на второй этап. Марина успешно прошла собеседование. Что можно заключить?",
+    options: [
+        "Марина получила приглашение на второй этап.",
+        "Марина уже получила работу.",
+        "Марина отказалась от приглашения.",
+        "Марина была единственным кандидатом."
+    ],
+    answer: 0,
+    explanation: "A informação permite concluir diretamente que Marina recebeu um convite para a segunda fase. Não permite concluir que já conseguiu o emprego."
+},
+
+{
+    section: "Compreensão e raciocínio lógico",
+    question: "Ни один студент, не сдавший экзамен, не получил сертификат. Алексей получил сертификат. Что следует из этой информации?",
+    options: [
+        "Алексей не сдавал экзамен.",
+        "Алексей сдал экзамен.",
+        "Алексей получил высший балл.",
+        "Алексей был преподавателем."
+    ],
+    answer: 1,
+    explanation: "Se ninguém que não passou recebeu certificado, então quem recebeu um certificado não pertence ao grupo dos que não passaram."
+},
+
+{
+    section: "Compreensão e raciocínio lógico",
+    question: "Если температура опускается ниже нуля, вода замерзает. Сегодня вода в озере замёрзла. Какой вывод наиболее осторожный?",
     options: [
         "Температура обязательно была ниже нуля.",
-        "Температура могла опуститься ниже нуля, но других причин исключать нельзя.",
-        "Сегодня было очень жарко."
+        "Температура могла опуститься ниже нуля, но одной этой информации недостаточно для окончательного вывода.",
+        "Температура никогда не опускалась ниже нуля.",
+        "Вода замёрзла только из-за ветра."
     ],
     answer: 1,
-    explanation: "A primeira afirmação indica uma consequência de temperaturas abaixo de zero, mas não permite concluir que essa foi necessariamente a única causa do gelo. A opção mais cautelosa evita uma conclusão absoluta."
+    explanation: "A condição apresentada não permite inverter automaticamente a relação. A água pode ter congelado por outras razões."
 },
 
 {
-    section: "Parte 3 · Compreensão e dedução lógica",
-    question: "Антон утверждает, что никогда не пользуется общественным транспортом. Однако каждое утро его видят в метро. Как лучше оценить это противоречие?",
+    section: "Compreensão e raciocínio lógico",
+    question: "Все участники конференции должны были зарегистрироваться заранее. Ирина не зарегистрировалась заранее. Что можно заключить?",
     options: [
-        "Его слова противоречат наблюдаемым фактам.",
-        "Его слова полностью подтверждаются.",
-        "Нельзя сделать никаких выводов."
-    ],
-    answer: 0,
-    explanation: "A afirmação de Anton contradiz aquilo que é observado diariamente. Existe uma incompatibilidade entre o que diz e o que faz."
-},
-
-{
-    section: "Parte 3 · Compreensão e dedução lógica",
-    question: "Все книги из этой серии содержат словарь в конце. В книге, которую читает Ольга, такого словаря нет. Что можно заключить?",
-    options: [
-        "Книга обязательно принадлежит этой серии.",
-        "Книга, вероятно, не принадлежит этой серии.",
-        "Ольга не умеет читать."
+        "Ирина обязательно выступала на конференции.",
+        "Ирина не выполнила одно из обязательных условий участия.",
+        "Ирина организовала конференцию.",
+        "Конференция была отменена."
     ],
     answer: 1,
-    explanation: "Se todas as obras da série têm um dicionário no final e o livro de Olga não o tem, então, de acordo com a informação dada, provavelmente não pertence à série."
+    explanation: "A informação permite concluir que Irina não cumpriu uma das condições obrigatórias."
 },
 
 {
-    section: "Parte 3 · Compreensão e dedução lógica",
-    question: "Прочитай литературный отрывок и ответь на вопрос.",
-    text: "Было ему тогда всего двадцать лет (брату его Ивану шел тогда двадцать четвертый год, а старшему их брату, Дмитрию, – двадцать восьмой). Прежде всего объявляю, что этот юноша, Алеша, был вовсе не фанатик и, по-моему, по крайней мере, даже и не мистик вовсе. Заранее скажу мое полное мнение: был он просто ранний человеколюбец, и если ударился на монастырскую дорогу, то потому только, что в то время она одна поразила его и представила ему, так сказать, идеал исхода рвавшейся из мрака мирской злобы к свету любви души его. И поразила-то его эта дорога лишь потому, что на ней он встретил тогда необыкновенное, по его мнению, существо – нашего знаменитого монастырского старца Зосиму, к которому привязался всею горячею первою любовью своего неутолимого сердца. Впрочем, я не спорю, что был он и тогда уже очень странен, начав даже с колыбели.",
-    translation: "Ф. М. Достоевский — «Братья Карамазовы» (Os Irmãos Karamázov).",
-    questionAfterText: "Как рассказчик характеризует Алёшу?",
+    section: "Compreensão e raciocínio lógico",
+    question: "Все книги этой серии содержат словарь. В данной книге словаря нет. Какой вывод наиболее обоснован?",
     options: [
-        "Как человека, который стремится к власти и богатству.",
-        "Как молодого человека, движимого любовью к людям и духовным поиском.",
-        "Как фанатика, который не способен любить других."
+        "Эта книга, вероятно, не относится к данной серии.",
+        "Все книги этой серии не имеют словаря.",
+        "Книга обязательно написана на другом языке.",
+        "Словарь был удалён издателем."
+    ],
+    answer: 0,
+    explanation: "Se todas as obras da série têm um glossário e esta não tem, então não deverá pertencer à série."
+},
+
+{
+    section: "Compreensão e raciocínio lógico",
+    question: "Если проект будет одобрен, компания начнёт его реализацию. Проект был одобрен. Что следует из этого?",
+    options: [
+        "Компания начнёт реализацию проекта.",
+        "Проект уже завершён.",
+        "Компания отказалась от проекта.",
+        "Проект не был рассмотрен."
+    ],
+    answer: 0,
+    explanation: "A condição foi cumprida: o projeto foi aprovado. Logo, de acordo com a informação, a empresa começará a implementá-lo."
+},
+
+{
+    section: "Compreensão e raciocínio lógico",
+    question: "Некоторые преподаватели работают в университете. Все сотрудники университета имеют служебный пропуск. Что можно заключить?",
+    options: [
+        "Все преподаватели имеют служебный пропуск.",
+        "Некоторые преподаватели имеют служебный пропуск.",
+        "Ни один преподаватель не имеет служебного пропуска.",
+        "Все сотрудники университета являются преподавателями."
     ],
     answer: 1,
-    explanation: "O narrador rejeita explicitamente a ideia de que Aliócha seja um fanático ou místico. Apresenta-o como alguém movido pelo amor à humanidade e pela procura de um ideal espiritual."
+    explanation: "Os professores que trabalham na universidade fazem parte dos seus funcionários e, por isso, têm cartão de identificação."
 },
 
 {
-    section: "Parte 3 · Compreensão e dedução lógica",
-    question: "Университет объявил, что занятия отменяются только в случае чрезвычайной ситуации. Сегодня занятия отменили. Что можно заключить?",
+    section: "Compreensão e raciocínio lógico",
+    question: "Ни один из представленных документов не был подписан директором. Один из документов подписан заместителем директора. Что можно утверждать?",
     options: [
-        "В университете, вероятно, возникла чрезвычайная ситуация.",
-        "Все студенты закончили обучение.",
-        "Занятия никогда больше не состоятся."
-    ],
-    answer: 0,
-    explanation: "A informação permite inferir que provavelmente ocorreu uma situação de emergência. Não permite concluir que os estudantes terminaram o curso ou que as aulas foram canceladas permanentemente."
-},
-
-{
-    section: "Parte 3 · Compreensão e dedução lógica",
-    question: "Ирина говорит, что полностью доверяет своему коллеге. При этом она никогда не поручает ему важные задачи. Какое заключение наиболее обоснованно?",
-    options: [
-        "Её действия не вполне соответствуют её словам.",
-        "Она обязательно считает его лучшим специалистом.",
-        "Она никогда не работает с коллегами."
-    ],
-    answer: 0,
-    explanation: "Existe uma contradição entre a confiança declarada e a ausência de tarefas importantes atribuídas ao colega. As ações não parecem corresponder às palavras."
-},
-
-{
-    section: "Parte 3 · Compreensão e dedução lógica",
-    question: "В отчёте говорится, что продажи выросли на 20% по сравнению с прошлым годом. Какой вывод нельзя сделать на основании только этой информации?",
-    options: [
-        "Продажи стали выше, чем год назад.",
-        "Компания обязательно получила больше чистой прибыли.",
-        "Показатель продаж увеличился на одну пятую."
+        "Документ был подписан директором.",
+        "Документ не был подписан директором.",
+        "Директор подписал все документы.",
+        "Заместитель директора является директором."
     ],
     answer: 1,
-    explanation: "Um aumento das vendas não garante um aumento do lucro líquido. Os custos e outras despesas também influenciam o resultado financeiro."
+    explanation: "A informação afirma expressamente que nenhum dos documentos foi assinado pelo diretor."
 },
 
 {
-    section: "Parte 3 · Compreensão e dedução lógica",
-    question: "Если человек регулярно практикует язык, получает обратную связь и исправляет свои ошибки, его навыки обычно улучшаются. Павел делает всё это уже несколько месяцев. Какой вывод наиболее разумен?",
+    section: "Compreensão e raciocínio lógico",
+    question: "Если человек регулярно занимается спортом, его физическая выносливость обычно повышается. Павел регулярно занимается спортом. Какой вывод наиболее логичен?",
     options: [
-        "Его языковые навыки, вероятно, улучшились.",
-        "Он обязательно стал носителем языка.",
-        "Он больше не допускает никаких ошибок."
+        "Физическая выносливость Павла обычно повышается.",
+        "Павел никогда не устаёт.",
+        "Павел обязательно станет профессиональным спортсменом.",
+        "Павел не нуждается в отдыхе."
     ],
     answer: 0,
-    explanation: "A prática regular, o feedback e a correção de erros favorecem a aprendizagem. É razoável concluir que as competências de Pavel provavelmente melhoraram, mas não que atingiu a perfeição."
+    explanation: "O enunciado apresenta uma consequência habitual, não uma garantia absoluta sobre todos os aspetos da condição física."
+},
+
+{
+    section: "Compreensão e raciocínio lógico",
+    question: "Прочитай отрывок из романа Ф. М. Достоевского и выбери наиболее точное утверждение.",
+    passage: "Было ему тогда всего двадцать лет (брату его Ивану шел тогда двадцать четвертый год, а старшему их брату, Дмитрию, – двадцать восьмой). Прежде всего объявляю, что этот юноша, Алеша, был вовсе не фанатик и, по-моему, по крайней мере, даже и не мистик вовсе. Заранее скажу мое полное мнение: был он просто ранний человеколюбец, и если ударился на монастырскую дорогу, то потому только, что в то время она одна поразила его и представила ему, так сказать, идеал исхода рвавшейся из мрака мирской злобы к свету любви души его. И поразила-то его эта дорога лишь потому, что на ней он встретил тогда необыкновенное, по его мнению, существо – нашего знаменитого монастырского старца Зосиму, к которому привязался всею горячею первою любовью своего неутолимого сердца. Впрочем, я не спорю, что был он и тогда уже очень странен, начав даже с колыбели.",
+    options: [
+        "Алёша выбрал монастырскую жизнь исключительно из-за желания получить власть.",
+        "Рассказчик представляет Алёшу как человека, которого привлекли любовь и духовный идеал, воплощённые в старце Зосиме.",
+        "Алёша с самого начала был убеждённым фанатиком и мистиком.",
+        "Старец Зосима был братом Алёши."
+    ],
+    answer: 1,
+    explanation: "O narrador descreve Aliócha como um jovem movido pelo amor à humanidade e atraído pelo ideal espiritual que encontrou em Zósima."
 }
 
 ];
 
 let currentQuestion = 0;
-let points = 0;
+let score = 0;
 let answered = false;
+let categoryScores = {};
 
-let categoryScores = {
-    grammar: 0,
-    vocabulary: 0,
-    logic: 0
-};
+function startQuiz() {
+    document.getElementById("intro").classList.add("hidden");
+    document.getElementById("quiz").classList.remove("hidden");
+    currentQuestion = 0;
+    score = 0;
+    categoryScores = {
+        "Gramática e expressão": {correct: 0, total: 0},
+        "Vocabulário e interpretação": {correct: 0, total: 0},
+        "Compreensão e raciocínio lógico": {correct: 0, total: 0}
+    };
+    questions.forEach(q => categoryScores[q.section].total++);
+    showQuestion();
+}
 
-function loadQuestion() {
-
+function showQuestion() {
     answered = false;
 
     const q = questions[currentQuestion];
@@ -772,244 +762,131 @@ function loadQuestion() {
     document.getElementById("questionNumber").textContent =
         `Pergunta ${currentQuestion + 1} de ${questions.length}`;
 
-    document.getElementById("score").textContent =
-        `Pontuação: ${points}`;
+    document.getElementById("scoreDisplay").textContent =
+        `Pontuação: ${score}`;
 
     document.getElementById("progress").style.width =
         `${(currentQuestion / questions.length) * 100}%`;
 
     document.getElementById("sectionLabel").textContent = q.section;
+    document.getElementById("questionText").textContent = q.question;
 
-    document.getElementById("question").textContent = q.question;
+    const passageContainer = document.getElementById("passageContainer");
 
-    const questionText = document.getElementById("questionText");
-
-    const textInstruction = document.getElementById("textInstruction");
-
-    if (q.text) {
-
-        questionText.textContent = q.text;
-
-        if (q.translation) {
-
-            const translation = document.createElement("span");
-
-            translation.className = "translation";
-
-            translation.textContent = q.translation;
-
-            questionText.appendChild(translation);
-
-        }
-
-        questionText.style.display = "block";
-
-        textInstruction.style.display = "block";
-
-        if (q.questionAfterText) {
-
-            document.getElementById("question").textContent =
-                q.questionAfterText;
-
-        }
-
-        if (currentQuestion === 17) {
-
-            textInstruction.textContent =
-                "O texto contém cinco erros. Lê-o com atenção e escolhe a opção que apresenta todas as correções necessárias.";
-
-        } else {
-
-            textInstruction.textContent =
-                "Lê o texto com atenção antes de responder.";
-
-        }
-
+    if (q.passage) {
+        passageContainer.classList.remove("hidden");
+        document.getElementById("passageText").textContent = q.passage;
     } else {
-
-        questionText.style.display = "none";
-
-        questionText.innerHTML = "";
-
-        textInstruction.style.display = "none";
-
+        passageContainer.classList.add("hidden");
     }
 
     const optionsDiv = document.getElementById("options");
-
     optionsDiv.innerHTML = "";
 
     q.options.forEach((option, index) => {
-
         const button = document.createElement("button");
-
         button.className = "option";
-
-        button.textContent = option;
-
-        button.onclick = () => checkAnswer(index, button);
-
+        button.textContent = `${String.fromCharCode(65 + index)}. ${option}`;
+        button.onclick = () => selectAnswer(index, button);
         optionsDiv.appendChild(button);
-
     });
 
-    document.getElementById("feedback").style.display = "none";
+    const feedback = document.getElementById("feedback");
+    feedback.className = "feedback";
+    feedback.textContent = "";
 
-    document.getElementById("nextBtn").style.display = "none";
-
+    document.getElementById("nextButton").classList.add("hidden");
 }
 
-function checkAnswer(selected, button) {
-
+function selectAnswer(selected, selectedButton) {
     if (answered) return;
-
     answered = true;
 
     const q = questions[currentQuestion];
-
-    const allOptions = document.querySelectorAll(".option");
-
+    const buttons = document.querySelectorAll(".option");
     const feedback = document.getElementById("feedback");
 
-    allOptions.forEach(option => option.disabled = true);
+    buttons.forEach(button => button.disabled = true);
 
     if (selected === q.answer) {
+        score++;
+        categoryScores[q.section].correct++;
+        selectedButton.classList.add("correct");
 
-        points++;
-
-        button.classList.add("correct");
-
-        if (currentQuestion < 10) {
-
-            categoryScores.grammar++;
-
-        } else if (currentQuestion < 20) {
-
-            categoryScores.vocabulary++;
-
-        } else {
-
-            categoryScores.logic++;
-
-        }
-
-        feedback.innerHTML =
-            "<strong>Correto!</strong> " + q.explanation;
-
+        feedback.className = "feedback good";
+        feedback.textContent = "Muito bem! " + q.explanation;
     } else {
+        selectedButton.classList.add("incorrect");
+        buttons[q.answer].classList.add("correct");
 
-        button.classList.add("incorrect");
-
-        allOptions[q.answer].classList.add("correct");
-
-        feedback.innerHTML =
-            "<strong>Não está correto.</strong> " + q.explanation;
-
+        feedback.className = "feedback bad";
+        feedback.textContent =
+            "Não é a resposta correta. A resposta certa é " +
+            String.fromCharCode(65 + q.answer) + ". " + q.explanation;
     }
 
-    feedback.style.display = "block";
+    document.getElementById("scoreDisplay").textContent =
+        `Pontuação: ${score}`;
 
-    document.getElementById("score").textContent =
-        `Pontuação: ${points}`;
-
-    const nextBtn = document.getElementById("nextBtn");
-
-    nextBtn.style.display = "inline-block";
-
-    nextBtn.textContent =
+    const nextButton = document.getElementById("nextButton");
+    nextButton.textContent =
         currentQuestion === questions.length - 1
-        ? "Ver resultados →"
+        ? "Ver resultado →"
         : "Próxima pergunta →";
 
+    nextButton.classList.remove("hidden");
 }
 
 function nextQuestion() {
-
     currentQuestion++;
 
     if (currentQuestion < questions.length) {
-
-        loadQuestion();
-
+        showQuestion();
     } else {
-
-        showResults();
-
+        showResult();
     }
-
 }
 
-function showResults() {
-
-    document.getElementById("quizArea").style.display = "none";
-
-    document.getElementById("result").style.display = "block";
+function showResult() {
+    document.getElementById("quiz").classList.add("hidden");
+    document.getElementById("result").classList.remove("hidden");
 
     document.getElementById("progress").style.width = "100%";
 
     let stars;
     let message;
 
-    if (points === 30) {
-
+    if (score === 30) {
         stars = "★★★★★";
-
-        message = "Excelente! Demonstraste um domínio muito sólido dos conteúdos e das estruturas de russo deste nível.";
-
-    } else if (points >= 20) {
-
-        stars = "★★★☆☆";
-
-        message = "Muito bem! Tens uma boa base de conhecimentos B2. Continua a trabalhar a precisão, a interpretação e as nuances da língua.";
-
+        message = "Excelente! Respondeste corretamente a todas as perguntas. Dominas muito bem estes conteúdos de nível B2.";
+    } else if (score >= 20) {
+        stars = "★★★";
+        message = "Muito bem! Tens uma boa base de russo B2. Continua a praticar para aperfeiçoares os teus conhecimentos.";
     } else {
-
-        stars = "★☆☆☆☆";
-
-        message = "Este nível exige bastante atenção às nuances da língua. Revê as explicações e continua a praticar. Cada erro é uma oportunidade de aprendizagem.";
-
+        stars = "★";
+        message = "Este nível ainda apresenta alguns desafios. Revê as respostas e volta a tentar. A prática é essencial!";
     }
 
     document.getElementById("stars").textContent = stars;
-
     document.getElementById("finalScore").textContent =
-        `Acertaste em ${points} de ${questions.length} perguntas.`;
+        `${score} / ${questions.length} respostas corretas`;
 
     document.getElementById("resultMessage").textContent = message;
 
-    document.getElementById("grammarResult").textContent =
-        `Gramática e expressão: ${categoryScores.grammar}/10`;
+    const results = document.getElementById("categoryResults");
+    results.innerHTML = "<h3>Resultados por secção</h3>";
 
-    document.getElementById("vocabularyResult").textContent =
-        `Vocabulário e interpretação: ${categoryScores.vocabulary}/10`;
-
-    document.getElementById("logicResult").textContent =
-        `Compreensão e dedução lógica: ${categoryScores.logic}/10`;
-
+    Object.entries(categoryScores).forEach(([name, data]) => {
+        const p = document.createElement("p");
+        p.textContent = `${name}: ${data.correct} / ${data.total}`;
+        results.appendChild(p);
+    });
 }
 
 function restartQuiz() {
-
-    currentQuestion = 0;
-
-    points = 0;
-
-    categoryScores = {
-        grammar: 0,
-        vocabulary: 0,
-        logic: 0
-    };
-
-    document.getElementById("result").style.display = "none";
-
-    document.getElementById("quizArea").style.display = "block";
-
-    loadQuestion();
-
+    document.getElementById("result").classList.add("hidden");
+    document.getElementById("intro").classList.remove("hidden");
 }
-
-loadQuestion();
-
 </script>
 
 </body>
