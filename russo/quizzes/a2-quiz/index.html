@@ -1,0 +1,516 @@
+
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Quiz de Russo A2 | A Biblioteca da Professora Daria</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Times New Roman", serif;
+    background: #f8f7f2;
+    color: #263449;
+    line-height: 1.6;
+}
+
+header {
+    background: #192c40;
+    color: #fff;
+    text-align: center;
+    padding: 35px 20px;
+    border-bottom: 4px solid #a68b4e;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 30px;
+    font-weight: normal;
+}
+
+header p {
+    margin: 8px 0 0;
+    color: #e4dfd2;
+    font-size: 16px;
+}
+
+main {
+    max-width: 760px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.back-link {
+    display: inline-block;
+    margin-bottom: 25px;
+    color: #526044;
+    text-decoration: none;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
+.quiz-card {
+    background: #fff;
+    padding: 35px;
+    border: 1px solid #e5e1d7;
+    border-radius: 4px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.04);
+}
+
+.level {
+    color: #a68b4e;
+    letter-spacing: 2px;
+    font-size: 13px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+.quiz-title {
+    font-size: 27px;
+    font-weight: normal;
+    margin: 0 0 10px;
+}
+
+.description {
+    color: #6c7280;
+    margin-bottom: 25px;
+}
+
+.progress-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    color: #6c7280;
+    margin-bottom: 8px;
+}
+
+.progress-bar {
+    height: 7px;
+    background: #e9e6dd;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 30px;
+}
+
+.progress {
+    height: 100%;
+    width: 0%;
+    background: #a68b4e;
+    transition: width 0.3s ease;
+}
+
+.question {
+    font-size: 23px;
+    margin: 20px 0 25px;
+    line-height: 1.4;
+}
+
+.options {
+    display: grid;
+    gap: 12px;
+}
+
+.option {
+    background: #f8f7f2;
+    border: 1px solid #dedbd1;
+    padding: 13px 16px;
+    text-align: left;
+    font-family: "Times New Roman", serif;
+    font-size: 17px;
+    color: #263449;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: 0.2s;
+}
+
+.option:hover:not(:disabled) {
+    border-color: #a68b4e;
+    background: #f2efe6;
+}
+
+.option:disabled {
+    cursor: default;
+}
+
+.option.correct {
+    background: #edf2e9;
+    border-color: #71845f;
+}
+
+.option.incorrect {
+    background: #f6ece8;
+    border-color: #b77b6c;
+}
+
+.feedback {
+    margin-top: 20px;
+    padding: 13px 15px;
+    display: none;
+    background: #f8f7f2;
+    border-left: 3px solid #a68b4e;
+}
+
+.next-btn, .restart-btn {
+    display: none;
+    margin-top: 25px;
+    background: #192c40;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    font-family: "Times New Roman", serif;
+    font-size: 17px;
+    cursor: pointer;
+}
+
+.next-btn:hover, .restart-btn:hover {
+    background: #30465e;
+}
+
+.result {
+    display: none;
+    text-align: center;
+}
+
+.stars {
+    color: #a68b4e;
+    font-size: 35px;
+    letter-spacing: 5px;
+    margin: 20px 0;
+}
+
+.result h2 {
+    font-size: 28px;
+    font-weight: normal;
+}
+
+.result p {
+    font-size: 18px;
+}
+
+footer {
+    background: #192c40;
+    color: #e4dfd2;
+    text-align: center;
+    padding: 20px;
+    margin-top: 60px;
+    border-top: 3px solid #a68b4e;
+    font-size: 14px;
+}
+
+@media (max-width: 600px) {
+    .quiz-card {
+        padding: 23px;
+    }
+
+    header h1 {
+        font-size: 25px;
+    }
+
+    .question {
+        font-size: 21px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>A Biblioteca da Professora Daria</h1>
+    <p>Aprender russo passo a passo</p>
+</header>
+
+<main>
+
+<a class="back-link" href="/russo/quizzes/">← Voltar aos quizzes</a>
+
+<div class="quiz-card">
+
+    <div id="quizArea">
+        <div class="level">Russo · Nível A2</div>
+        <h2 class="quiz-title">Quiz de conhecimentos</h2>
+        <p class="description">
+            15 perguntas para testar os teus conhecimentos de russo.
+            Escolhe a resposta correta em cada pergunta.
+        </p>
+
+        <div class="progress-info">
+            <span id="questionNumber">Pergunta 1 de 15</span>
+            <span id="score">Pontuação: 0</span>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress" id="progress"></div>
+        </div>
+
+        <div class="question" id="question"></div>
+        <div class="options" id="options"></div>
+
+        <div class="feedback" id="feedback"></div>
+
+        <button class="next-btn" id="nextBtn" onclick="nextQuestion()">
+            Próxima pergunta →
+        </button>
+    </div>
+
+    <div class="result" id="result">
+        <div class="level">Quiz concluído</div>
+        <h2>Parabéns!</h2>
+        <div class="stars" id="stars"></div>
+        <p id="finalScore"></p>
+        <p id="resultMessage"></p>
+        <button class="restart-btn" style="display:inline-block" onclick="restartQuiz()">
+            Repetir o quiz
+        </button>
+    </div>
+
+</div>
+</main>
+
+<footer>
+    A Biblioteca da Professora Daria · Aprender com curiosidade
+</footer>
+
+<script>
+
+const questions = [
+
+{
+    question: "Вчера я ___ в кино.",
+    options: ["иду", "ходил", "пойду"],
+    answer: 1,
+    explanation: "«Вчера» significa ontem. Para falar de uma ação concluída no passado, usamos aqui «ходил» (fui)."
+},
+
+{
+    question: "Завтра мы ___ в музей.",
+    options: ["ходили", "ходить", "пойдём"],
+    answer: 2,
+    explanation: "«Завтра» significa amanhã. «Пойдём» é a forma de futuro de «ir» para nós."
+},
+
+{
+    question: "Я интересуюсь ___ музыкой.",
+    options: ["классическая", "классической", "классическую"],
+    answer: 1,
+    explanation: "Depois de «интересоваться» usamos o caso instrumental: «классической музыкой»."
+},
+
+{
+    question: "У меня нет ___ времени.",
+    options: ["свободное", "свободного", "свободным"],
+    answer: 1,
+    explanation: "Depois de «нет» usamos o genitivo. «Время» passa a «времени» e «свободное» passa a «свободного»."
+},
+
+{
+    question: "Она живёт ___ Москве уже три года.",
+    options: ["в", "на", "из"],
+    answer: 0,
+    explanation: "Para indicar que alguém vive numa cidade, usamos «в»: «в Москве»."
+},
+
+{
+    question: "Когда я был маленьким, я часто ___ у бабушки.",
+    options: ["живу", "жил", "буду жить"],
+    answer: 1,
+    explanation: "A expressão «когда я был маленьким» indica o passado. «Жил» é a forma masculina do passado de «жить»."
+},
+
+{
+    question: "Я купил подарок ___ мамы.",
+    options: ["для", "к", "у"],
+    answer: 0,
+    explanation: "«Для» significa para e exige o genitivo: «для мамы»."
+},
+
+{
+    question: "Ты уже ___ эту книгу?",
+    options: ["читал", "прочитал", "читать"],
+    answer: 1,
+    explanation: "«Уже» significa já. «Прочитал» indica que a leitura foi concluída."
+},
+
+{
+    question: "Моя сестра старше ___ на два года.",
+    options: ["я", "меня", "мне"],
+    answer: 1,
+    explanation: "Depois de «старше» usamos o genitivo: «старше меня» (mais velha do que eu)."
+},
+
+{
+    question: "Я хочу, ___ ты пришёл завтра.",
+    options: ["что", "чтобы", "потому что"],
+    answer: 1,
+    explanation: "«Чтобы» é usado para expressar desejo ou intenção: quero que venhas amanhã."
+},
+
+{
+    question: "Мы познакомились ___ университете.",
+    options: ["в", "из", "на"],
+    answer: 0,
+    explanation: "Para indicar o local onde algo aconteceu, usamos «в университете»."
+},
+
+{
+    question: "Если будет хорошая погода, мы ___ гулять.",
+    options: ["будем", "были", "есть"],
+    answer: 0,
+    explanation: "«Если будет хорошая погода» significa se o tempo estiver bom. «Будем гулять» é o futuro de «passear»."
+},
+
+{
+    question: "Я жду ___ уже двадцать минут.",
+    options: ["ты", "тебя", "тебе"],
+    answer: 1,
+    explanation: "O verbo «ждать» (esperar) exige o caso genitivo: «ждать тебя»."
+},
+
+{
+    question: "Она говорит по-русски ___, чем её брат.",
+    options: ["лучше", "хороший", "хорошо"],
+    answer: 0,
+    explanation: "«Лучше» é o comparativo de «хорошо»: melhor."
+},
+
+{
+    question: "Мы приехали в Санкт-Петербург ___ поезде.",
+    options: ["на", "в", "с"],
+    answer: 0,
+    explanation: "Para indicar que viajamos de comboio, usamos «на поезде»."
+}
+
+];
+
+let currentQuestion = 0;
+let points = 0;
+let answered = false;
+
+function loadQuestion() {
+    answered = false;
+
+    const q = questions[currentQuestion];
+
+    document.getElementById("questionNumber").textContent =
+        `Pergunta ${currentQuestion + 1} de ${questions.length}`;
+
+    document.getElementById("score").textContent =
+        `Pontuação: ${points}`;
+
+    document.getElementById("progress").style.width =
+        `${(currentQuestion / questions.length) * 100}%`;
+
+    document.getElementById("question").textContent = q.question;
+
+    const optionsDiv = document.getElementById("options");
+    optionsDiv.innerHTML = "";
+
+    q.options.forEach((option, index) => {
+        const button = document.createElement("button");
+        button.className = "option";
+        button.textContent = option;
+        button.onclick = () => checkAnswer(index, button);
+        optionsDiv.appendChild(button);
+    });
+
+    document.getElementById("feedback").style.display = "none";
+    document.getElementById("nextBtn").style.display = "none";
+}
+
+function checkAnswer(selected, button) {
+    if (answered) return;
+
+    answered = true;
+
+    const q = questions[currentQuestion];
+    const allOptions = document.querySelectorAll(".option");
+    const feedback = document.getElementById("feedback");
+
+    allOptions.forEach(option => option.disabled = true);
+
+    if (selected === q.answer) {
+        points++;
+        button.classList.add("correct");
+        feedback.innerHTML = "<strong>Correto!</strong> " + q.explanation;
+    } else {
+        button.classList.add("incorrect");
+        allOptions[q.answer].classList.add("correct");
+        feedback.innerHTML = "<strong>Não está correto.</strong> " + q.explanation;
+    }
+
+    feedback.style.display = "block";
+
+    document.getElementById("score").textContent =
+        `Pontuação: ${points}`;
+
+    const nextBtn = document.getElementById("nextBtn");
+    nextBtn.style.display = "inline-block";
+
+    nextBtn.textContent =
+        currentQuestion === questions.length - 1
+        ? "Ver resultados →"
+        : "Próxima pergunta →";
+}
+
+function nextQuestion() {
+    currentQuestion++;
+
+    if (currentQuestion < questions.length) {
+        loadQuestion();
+    } else {
+        showResults();
+    }
+}
+
+function showResults() {
+    document.getElementById("quizArea").style.display = "none";
+    document.getElementById("result").style.display = "block";
+    document.getElementById("progress").style.width = "100%";
+
+    let stars;
+    let message;
+
+    if (points === 15) {
+        stars = "★★★★★";
+        message = "Excelente! Respondeste corretamente a todas as perguntas.";
+    } else if (points >= 8) {
+        stars = "★★★☆☆";
+        message = "Muito bem! Já tens uma boa base de conhecimentos. Continua a praticar!";
+    } else {
+        stars = "★☆☆☆☆";
+        message = "Continua a estudar e a praticar. Vais conseguir melhorar!";
+    }
+
+    document.getElementById("stars").textContent = stars;
+
+    document.getElementById("finalScore").textContent =
+        `Acertaste em ${points} de ${questions.length} perguntas.`;
+
+    document.getElementById("resultMessage").textContent = message;
+}
+
+function restartQuiz() {
+    currentQuestion = 0;
+    points = 0;
+
+    document.getElementById("result").style.display = "none";
+    document.getElementById("quizArea").style.display = "block";
+
+    loadQuestion();
+}
+
+loadQuestion();
+
+</script>
+
+</body>
+</html>
